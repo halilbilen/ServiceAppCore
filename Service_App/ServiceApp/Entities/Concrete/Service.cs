@@ -3,11 +3,13 @@ using System.Collections.Generic;
 
 namespace Entities.Concrete
 {
-    public partial class UserOperationClaim
+    public partial class Service
     {
         public int Id { get; set; }
-        public int? UserId { get; set; }
-        public int? OperationClaimId { get; set; }
+        public string Name { get; set; }
+        public int? CategoryId { get; set; }
+        public string Description { get; set; }
+        public byte[] Media { get; set; }
         public int? CreatedUserId { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedUserId { get; set; }

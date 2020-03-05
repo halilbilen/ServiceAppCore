@@ -15,7 +15,10 @@ namespace Entities.Concrete
         {
         }
 
+        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Core.Entity.Concrete.OperationClaim> OperationClaim { get; set; }
+        public virtual DbSet<Service> Service { get; set; }
         public virtual DbSet<Core.Entity.Concrete.User> User { get; set; }
         public virtual DbSet<Core.Entity.Concrete.UserOperationClaim> UserOperationClaim { get; set; }
 
@@ -29,14 +32,157 @@ namespace Entities.Concrete
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.CreatedUserId).HasColumnType("int(11)");
+
+                entity.Property(e => e.Description)
+                    .HasColumnType("varchar(500)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.Media).HasColumnType("mediumblob");
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.ModifiedUserId).HasColumnType("int(11)");
+
+                entity.Property(e => e.Name)
+                    .HasColumnType("varchar(50)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.StatusId)
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'1'");
+            });
+
+            modelBuilder.Entity<Company>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.About)
+                    .HasColumnType("longtext")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.CityCode)
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.CountryCode)
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.CreatedUserId).HasColumnType("int(11)");
+
+                entity.Property(e => e.Email)
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.GsmNo)
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.Media).HasColumnType("mediumblob");
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.ModifiedUserId).HasColumnType("int(11)");
+
+                entity.Property(e => e.Name)
+                    .HasColumnType("varchar(100)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.StatusId)
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'1'");
+
+                entity.Property(e => e.TypeId).HasColumnType("int(11)");
+
+                entity.Property(e => e.UserId).HasColumnType("int(11)");
+
+                entity.Property(e => e.WorkTime).HasColumnType("int(11)");
+            });
+
             modelBuilder.Entity<OperationClaim>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.CreatedUserId).HasColumnType("int(11)");
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.ModifiedUserId).HasColumnType("int(11)");
 
                 entity.Property(e => e.Name)
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.StatusId)
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'1'");
+            });
+
+            modelBuilder.Entity<Service>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnType("int(11)");
+
+                entity.Property(e => e.CategoryId).HasColumnType("int(11)");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.CreatedUserId).HasColumnType("int(11)");
+
+                entity.Property(e => e.Description)
+                    .HasColumnType("varchar(500)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.Media).HasColumnType("mediumblob");
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.ModifiedUserId).HasColumnType("int(11)");
+
+                entity.Property(e => e.Name)
+                    .HasColumnType("varchar(50)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.StatusId)
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'1'");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -46,8 +192,6 @@ namespace Entities.Concrete
                 entity.Property(e => e.AllowNotification).HasColumnType("int(11)");
 
                 entity.Property(e => e.AllowSms).HasColumnType("int(11)");
-
-                entity.Property(e => e.BirthDate).HasColumnType("date");
 
                 entity.Property(e => e.CityCode)
                     .HasColumnType("varchar(45)")
@@ -93,17 +237,9 @@ namespace Entities.Concrete
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
 
-                entity.Property(e => e.PasswordHash)
-                    .HasColumnType("varchar(500)")
-                    .HasCharSet("utf8mb4")
-                    .HasCollation("utf8mb4_0900_ai_ci");
+                entity.Property(e => e.PasswordHash).HasMaxLength(500);
 
-                entity.Property(e => e.PasswordSalt)
-                    .HasColumnType("varchar(500)")
-                    .HasCharSet("utf8mb4")
-                    .HasCollation("utf8mb4_0900_ai_ci");
-
-                entity.Property(e => e.RegisteredDate).HasColumnType("date");
+                entity.Property(e => e.PasswordSalt).HasMaxLength(500);
 
                 entity.Property(e => e.StatusId)
                     .HasColumnType("int(1)")
@@ -124,7 +260,23 @@ namespace Entities.Concrete
             {
                 entity.Property(e => e.Id).HasColumnType("int(11)");
 
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.CreatedUserId).HasColumnType("int(11)");
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.ModifiedUserId).HasColumnType("int(11)");
+
                 entity.Property(e => e.OperationClaimId).HasColumnType("int(11)");
+
+                entity.Property(e => e.StatusId)
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'1'");
 
                 entity.Property(e => e.UserId).HasColumnType("int(11)");
             });

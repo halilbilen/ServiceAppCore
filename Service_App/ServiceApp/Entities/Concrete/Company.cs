@@ -3,22 +3,19 @@ using System.Collections.Generic;
 
 namespace Entities.Concrete
 {
-    public partial class User
+    public partial class Company
     {
         public int Id { get; set; }
+        public int? UserId { get; set; }
         public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Email { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
-        public int? GenderId { get; set; }
+        public int? TypeId { get; set; }
+        public int? WorkTime { get; set; }
+        public byte[] Media { get; set; }
         public string CityCode { get; set; }
         public string CountryCode { get; set; }
         public string GsmNo { get; set; }
-        public string VerificationCode { get; set; }
-        public int? AllowNotification { get; set; }
-        public int? AllowSms { get; set; }
-        public string DeviceToken { get; set; }
+        public string Email { get; set; }
+        public string About { get; set; }
         public int? CreatedUserId { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedUserId { get; set; }
