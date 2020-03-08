@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Entities.Concrete;
-using Entity.Dto;
+using Entities.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,16 +15,23 @@ namespace ServiceApi.Controllers
     public class UserController : ControllerBase
     {
         private IUserService userService;
+        private IHttpContextAccessor accessor;
 
-        public UserController(IUserService _userService)
+        public UserController(IUserService _userService, IHttpContextAccessor _accessor)
         {
             userService = _userService;
+            accessor = _accessor;
+
         }
 
         [HttpPost("login")]
-        public ActionResult Login(UserForLoginDto userForLoginDto)
+        public ActionResult Login(Request.User.Login request)
         {
-            var userToLogin = userService.Login(userForLoginDto);
+            request.ClientIp = accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            request.ClientUserAgent = accessor.HttpContext.Request.Headers["User-Agent"].ToString();
+            request.AcceptLanguage = accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
+
+            var userToLogin = userService.Login(request);
             if (!userToLogin.Success)
             {
                 return BadRequest(userToLogin.Message);
@@ -40,15 +47,15 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult Register(UserForRegisterDto userForRegisterDto)
+        public ActionResult Register(Request.User.Register request)
         {
-            var userExists = userService.UserExists(userForRegisterDto.Email);
+            var userExists = userService.UserExists(request.Email);
             if (!userExists.Success)
             {
                 return BadRequest(userExists.Message);
             }
 
-            var registerResult = userService.Register(userForRegisterDto);
+            var registerResult = userService.Register(request);
             var result = userService.CreateAccessToken(registerResult.Data);
 
             if (result.Success)

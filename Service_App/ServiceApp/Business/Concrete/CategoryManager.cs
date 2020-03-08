@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Aspects.Autofac;
 using Business.Constants;
+using Core.Aspects.Autofac.Caching;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -23,14 +24,14 @@ namespace Business.Concrete
             categoryDal = _categoryDal;
         }
 
-        public IResult Add(CategoryDto category)
+        public IResult Add(Request.Category.Create request)
         {
-            var categories = categoryDal.Get(filter: p => p.Name == category.Name);
+            var categories = categoryDal.Get(filter: p => p.Name == request.Name);
             if (categories != null) { return new ErrorResult(Messages.ExistsCategory); }
             var c = new Category
             {
-                Name = category.Name,
-                Description = category.Description,
+                Name = request.Name,
+                Description = request.Description,
                 CreatedUserId = 1,
                 CreatedDate = DateTime.Now,
                 ModifiedUserId = 0,
@@ -53,6 +54,7 @@ namespace Business.Concrete
         }
 
         [SecuredOperation("Product.List,Admin")]
+        [CacheAspect(_duration: 10)]
         public IDataResult<List<Category>> GetList()
         {
             return new SuccessDataResult<List<Category>>(categoryDal.GetList().ToList());

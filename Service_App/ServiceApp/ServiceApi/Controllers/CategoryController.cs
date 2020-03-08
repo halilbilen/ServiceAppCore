@@ -45,10 +45,10 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add([FromForm]CategoryDto Category)
+        public IActionResult Add([FromForm]Request.Category.Create request)
         {
-            if (Category == null) { return BadRequest(); }
-            var result = categoryService.Add(Category);
+            if (request == null) { return BadRequest(); }
+            var result = categoryService.Add(request);
             if (result.Success)
             {
                 return Ok(result.Message);

@@ -5,7 +5,7 @@ using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JsonWebToken;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entity.Dto;
+using Entities.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -45,16 +45,16 @@ namespace Business.Concrete
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
 
-        public IDataResult<User> Login(UserForLoginDto userForLoginDto)
+        public IDataResult<User> Login(Request.User.Login request)
         {
-            var userCheck = GetByMail(userForLoginDto.Email);
+            var userCheck = GetByMail(request.Email);
 
             if (userCheck == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
             }
 
-            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userCheck.PasswordHash, passwordSalt: userCheck.PasswordSalt))
+            if (!HashingHelper.VerifyPasswordHash(request.Password, userCheck.PasswordHash, passwordSalt: userCheck.PasswordSalt))
             {
                 return new ErrorDataResult<User>(Messages.PasswordError);
             }
@@ -62,16 +62,16 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(userCheck, Messages.SuccessLogin);
         }
 
-        public IDataResult<User> Register(UserForRegisterDto userForRegisterDto)
+        public IDataResult<User> Register(Request.User.Register request)
         {
             byte[] passwordHash, passwordSalt;
-            HashingHelper.CreatePasswordHash(userForRegisterDto.Password, out passwordHash, out passwordSalt);
+            HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
 
             var user = new User
             {
-                Email = userForRegisterDto.Email,
-                Name = userForRegisterDto.FirstName,
-                Surname = userForRegisterDto.LastName,
+                Email = request.Email,
+                Name = request.FirstName,
+                Surname = request.LastName,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 StatusId = 1

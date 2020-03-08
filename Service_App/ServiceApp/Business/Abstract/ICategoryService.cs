@@ -12,7 +12,7 @@ namespace Business.Abstract
         IDataResult<Category> GetById(int CategoryId);
         IDataResult<List<Category>> GetList();
 
-        IResult Add(CategoryDto Category);
+        IResult Add(Request.Category.Create Category);
         IResult Delete(Category Category);
         IResult Update(Category Category);
     }

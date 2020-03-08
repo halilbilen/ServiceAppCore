@@ -1,7 +1,7 @@
 ﻿using Core.Utilities.Results;
 using Core.Utilities.Security.JsonWebToken;
 using Entities.Concrete;
-using Entity.Dto;
+using Entities.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,8 +13,8 @@ namespace Business.Abstract
         List<OperationClaim> GetClaims(User user);
         void Add(User user);
         User GetByMail(string email);
-        IDataResult<User> Register(UserForRegisterDto userForRegisterDto);
-        IDataResult<User> Login(UserForLoginDto userForLoginDto);
+        IDataResult<User> Register(Request.User.Register request);
+        IDataResult<User> Login(Request.User.Login userForLoginDto);
         IResult UserExists(string email);
         IDataResult<AccessToken> CreateAccessToken(User user);
     }
