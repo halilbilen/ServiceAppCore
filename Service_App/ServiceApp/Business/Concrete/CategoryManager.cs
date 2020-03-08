@@ -5,8 +5,10 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dto;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -28,12 +30,12 @@ namespace Business.Concrete
             var c = new Category
             {
                 Name = category.Name,
-                Description=category.Description,
-                CreatedUserId=1,
-                CreatedDate=DateTime.Now,
-                ModifiedUserId=0,
-                ModifiedDate=DateTime.Now,
-                StatusId=1
+                Description = category.Description,
+                CreatedUserId = 1,
+                CreatedDate = DateTime.Now,
+                ModifiedUserId = 0,
+                ModifiedDate = DateTime.Now,
+                StatusId = 1
             };
             categoryDal.Add(c);
             return new SuccessResult(Messages.CategoryAdded);

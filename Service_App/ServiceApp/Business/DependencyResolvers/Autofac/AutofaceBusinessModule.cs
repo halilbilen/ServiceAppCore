@@ -21,7 +21,6 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfUserDal>().As<IUserDal>();
             builder.RegisterType<CategoryManager>().As<ICategoryService>();
             builder.RegisterType<EfCategoryDal>().As<ICategoryDal>();
-            builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces().EnableInterfaceInterceptors(new ProxyGenerationOptions()
