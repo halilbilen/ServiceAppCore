@@ -19,7 +19,9 @@ namespace Business.Constants
         public static string AuthorizationDenied = "Yetki yok";
 
         public static string CategoryAdded = "Category Eklendi";
-        internal static string CategoryDeleted;
-        internal static string CategoryUpdated;
+        public static string CategoryDeleted = "Category Silindi";
+        public static string CategoryUpdated = "Category Eklendi";
+
+        public static string ExistsCategory = "Mevcut Category";
     }
 }

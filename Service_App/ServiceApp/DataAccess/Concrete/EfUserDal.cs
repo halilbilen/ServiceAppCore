@@ -1,6 +1,5 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
-using Core.Entity.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,9 +8,9 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete
 {
-    public class EfUserDal : EfBaseRepository<Core.Entity.Concrete.User, ServiceAppContext>, IUserDal
+    public class EfUserDal : EfBaseRepository<User, ServiceAppContext>, IUserDal
     {
-        public List<Core.Entity.Concrete.OperationClaim> GetClaims(Core.Entity.Concrete.User user)
+        public List<OperationClaim> GetClaims(User user)
         {
             using (var context = new ServiceAppContext())
             {
@@ -19,7 +18,7 @@ namespace DataAccess.Concrete
                              join userOperationClaim in context.UserOperationClaim
                              on operationClaim.Id equals userOperationClaim.OperationClaimId
                              where userOperationClaim.UserId == user.Id
-                             select new Core.Entity.Concrete.OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };
+                             select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };
                 return result.ToList();
             }
         }

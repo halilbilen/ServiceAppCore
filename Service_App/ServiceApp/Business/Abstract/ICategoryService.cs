@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Business.Abstract
         IDataResult<Category> GetById(int CategoryId);
         IDataResult<List<Category>> GetList();
 
-        IResult Add(Category Category);
+        IResult Add(CategoryDto Category);
         IResult Delete(Category Category);
         IResult Update(Category Category);
     }

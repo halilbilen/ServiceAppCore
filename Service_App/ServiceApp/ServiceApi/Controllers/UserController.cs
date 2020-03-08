@@ -14,23 +14,23 @@ namespace ServiceApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IAuthService authService;
+        private IUserService userService;
 
-        public UserController(IAuthService _authService)
+        public UserController(IUserService _userService)
         {
-            authService = _authService;
+            userService = _userService;
         }
 
         [HttpPost("login")]
         public ActionResult Login(UserForLoginDto userForLoginDto)
         {
-            var userToLogin = authService.Login(userForLoginDto);
+            var userToLogin = userService.Login(userForLoginDto);
             if (!userToLogin.Success)
             {
                 return BadRequest(userToLogin.Message);
             }
 
-            var result = authService.CreateAccessToken(userToLogin.Data);
+            var result = userService.CreateAccessToken(userToLogin.Data);
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -42,14 +42,14 @@ namespace ServiceApi.Controllers
         [HttpPost("register")]
         public ActionResult Register(UserForRegisterDto userForRegisterDto)
         {
-            var userExists = authService.UserExists(userForRegisterDto.Email);
+            var userExists = userService.UserExists(userForRegisterDto.Email);
             if (!userExists.Success)
             {
                 return BadRequest(userExists.Message);
             }
 
-            var registerResult = authService.Register(userForRegisterDto);
-            var result = authService.CreateAccessToken(registerResult.Data);
+            var registerResult = userService.Register(userForRegisterDto);
+            var result = userService.CreateAccessToken(registerResult.Data);
 
             if (result.Success)
             {

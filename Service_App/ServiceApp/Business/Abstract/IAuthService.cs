@@ -1,6 +1,6 @@
-﻿using Core.Entity.Concrete;
-using Core.Utilities.Results;
+﻿using Core.Utilities.Results;
 using Core.Utilities.Security.JsonWebToken;
+using Entities.Concrete;
 using Entity.Dto;
 using System;
 using System.Collections.Generic;

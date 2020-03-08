@@ -1,11 +1,10 @@
-﻿using Core.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Entity.Dto
 {
-    public class UserForLoginDto:IDto
+    public class UserForLoginDto
     {
         public string Email { get; set; }
         public string Password { get; set; }

@@ -4,6 +4,7 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,21 +21,33 @@ namespace Business.Concrete
             categoryDal = _categoryDal;
         }
 
-        public IResult Add(Category Category)
+        public IResult Add(CategoryDto category)
         {
-            categoryDal.Add(Category);
+            var categories = categoryDal.Get(filter: p => p.Name == category.Name);
+            if (categories != null) { return new ErrorResult(Messages.ExistsCategory); }
+            var c = new Category
+            {
+                Name = category.Name,
+                Description=category.Description,
+                CreatedUserId=1,
+                CreatedDate=DateTime.Now,
+                ModifiedUserId=0,
+                ModifiedDate=DateTime.Now,
+                StatusId=1
+            };
+            categoryDal.Add(c);
             return new SuccessResult(Messages.CategoryAdded);
         }
 
-        public IResult Delete(Category Category)
+        public IResult Delete(Category category)
         {
-            categoryDal.Delete(Category);
+            categoryDal.Delete(category);
             return new SuccessResult(Messages.CategoryDeleted);
         }
 
-        public IDataResult<Category> GetById(int CategoryId)
+        public IDataResult<Category> GetById(int categoryId)
         {
-            return new SuccessDataResult<Category>(categoryDal.Get(filter: p => p.Id == CategoryId));
+            return new SuccessDataResult<Category>(categoryDal.Get(filter: p => p.Id == categoryId));
         }
 
         [SecuredOperation("Product.List,Admin")]
@@ -43,9 +56,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Category>>(categoryDal.GetList().ToList());
         }
 
-        public IResult Update(Category Category)
+        public IResult Update(Category category)
         {
-            categoryDal.Update(Category);
+            categoryDal.Update(category);
             return new SuccessResult(Messages.CategoryUpdated);
         }
     }

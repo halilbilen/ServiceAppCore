@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Entities.Concrete;
+using Entities.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,7 +45,7 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Category Category)
+        public IActionResult Add([FromForm]CategoryDto Category)
         {
             if (Category == null) { return BadRequest(); }
             var result = categoryService.Add(Category);
@@ -56,7 +57,7 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Category Category)
+        public IActionResult Update([FromBody]Category Category)
         {
             if (Category == null) { return BadRequest(); }
             var result = categoryService.Update(Category);
@@ -68,7 +69,7 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Category Category)
+        public IActionResult Delete([FromBody]Category Category)
         {
             if (Category == null) { return BadRequest(); }
             var result = categoryService.Delete(Category);

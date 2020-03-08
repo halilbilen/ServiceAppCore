@@ -17,10 +17,10 @@ namespace Entities.Concrete
 
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Company> Company { get; set; }
-        public virtual DbSet<Core.Entity.Concrete.OperationClaim> OperationClaim { get; set; }
+        public virtual DbSet<OperationClaim> OperationClaim { get; set; }
         public virtual DbSet<Service> Service { get; set; }
-        public virtual DbSet<Core.Entity.Concrete.User> User { get; set; }
-        public virtual DbSet<Core.Entity.Concrete.UserOperationClaim> UserOperationClaim { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<UserOperationClaim> UserOperationClaim { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
