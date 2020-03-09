@@ -5,7 +5,7 @@ namespace Entities.Concrete
 {
     public partial class OperationClaim
     {
-        public int Id { get; set; }
+        public int OperationClaimId { get; set; }
         public string Name { get; set; }
         public int? CreatedUserId { get; set; }
         public DateTime? CreatedDate { get; set; }

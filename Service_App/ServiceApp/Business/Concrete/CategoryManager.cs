@@ -32,11 +32,7 @@ namespace Business.Concrete
             {
                 Name = request.Name,
                 Description = request.Description,
-                CreatedUserId = 1,
-                CreatedDate = DateTime.Now,
-                ModifiedUserId = 0,
-                ModifiedDate = DateTime.Now,
-                StatusId = 1
+                CreatedUserId = 1
             };
             categoryDal.Add(c);
             return new SuccessResult(Messages.CategoryAdded);
@@ -50,7 +46,7 @@ namespace Business.Concrete
 
         public IDataResult<Category> GetById(int categoryId)
         {
-            return new SuccessDataResult<Category>(categoryDal.Get(filter: p => p.Id == categoryId));
+            return new SuccessDataResult<Category>(categoryDal.Get(filter: p => p.CategoryId == categoryId));
         }
 
         [SecuredOperation("Product.List,Admin")]

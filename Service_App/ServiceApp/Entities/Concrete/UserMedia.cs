@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace Entities.Concrete
 {
-    public partial class Service
+    public partial class UserMedia
     {
-        public int ServiceId { get; set; }
-        public string Name { get; set; }
-        public int? CategoryId { get; set; }
-        public string Description { get; set; }
+        public int UserMediaId { get; set; }
+        public int? UserId { get; set; }
+        public string Path { get; set; }
+        public string Url { get; set; }
         public byte[] Media { get; set; }
         public int? CreatedUserId { get; set; }
         public DateTime? CreatedDate { get; set; }
