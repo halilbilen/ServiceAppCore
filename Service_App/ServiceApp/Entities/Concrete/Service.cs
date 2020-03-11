@@ -9,7 +9,6 @@ namespace Entities.Concrete
         public string Name { get; set; }
         public int? CategoryId { get; set; }
         public string Description { get; set; }
-        public byte[] Media { get; set; }
         public int? CreatedUserId { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedUserId { get; set; }

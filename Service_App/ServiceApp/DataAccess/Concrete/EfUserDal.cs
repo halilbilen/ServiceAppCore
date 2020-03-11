@@ -16,9 +16,9 @@ namespace DataAccess.Concrete
             {
                 var result = from operationClaim in context.OperationClaim
                              join userOperationClaim in context.UserOperationClaim
-                             on operationClaim.Id equals userOperationClaim.OperationClaimId
-                             where userOperationClaim.UserId == user.Id
-                             select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };
+                             on operationClaim.OperationClaimId equals userOperationClaim.OperationClaimId
+                             where userOperationClaim.UserId == user.UserId
+                             select new OperationClaim { OperationClaimId = operationClaim.OperationClaimId, Name = operationClaim.Name };
                 return result.ToList();
             }
         }

@@ -14,7 +14,7 @@ namespace Business.Abstract
         void Add(User user);
         User GetByMail(string email);
         IDataResult<User> Register(Request.User.Register request);
-        IDataResult<User> Login(Request.User.Login userForLoginDto);
+        IDataResult<User> Login(Request.User.Login request);
         IResult UserExists(string email);
         IDataResult<AccessToken> CreateAccessToken(User user);
     }

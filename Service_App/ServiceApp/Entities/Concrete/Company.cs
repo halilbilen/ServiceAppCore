@@ -10,7 +10,6 @@ namespace Entities.Concrete
         public string Name { get; set; }
         public int? TypeId { get; set; }
         public int? WorkTime { get; set; }
-        public byte[] Media { get; set; }
         public string CityCode { get; set; }
         public string CountryCode { get; set; }
         public string GsmNo { get; set; }

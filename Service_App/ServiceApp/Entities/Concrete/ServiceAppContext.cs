@@ -58,8 +58,6 @@ namespace Entities.Concrete
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
 
-                entity.Property(e => e.Media).HasColumnType("mediumblob");
-
                 entity.Property(e => e.ModifiedDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
@@ -178,8 +176,6 @@ namespace Entities.Concrete
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
-
-                entity.Property(e => e.Media).HasColumnType("mediumblob");
 
                 entity.Property(e => e.ModifiedDate)
                     .HasColumnType("datetime")
@@ -395,8 +391,6 @@ namespace Entities.Concrete
                     .HasColumnType("varchar(500)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
-
-                entity.Property(e => e.Media).HasColumnType("mediumblob");
 
                 entity.Property(e => e.ModifiedDate)
                     .HasColumnType("datetime")

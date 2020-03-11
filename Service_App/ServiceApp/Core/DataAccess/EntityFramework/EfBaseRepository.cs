@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,7 @@ namespace Core.DataAccess.EntityFramework
         where TEntity : class
         where TContext : DbContext, new()
     {
+        [LogAspect(typeof(JsonFileLogger))]
         public void Add(TEntity entity)
         {
             using (var context = new TContext())

@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JsonWebToken;
@@ -62,6 +64,7 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(userCheck, Messages.SuccessLogin);
         }
 
+        [LogAspect(typeof(JsonFileLogger))]
         public IDataResult<User> Register(Request.User.Register request)
         {
             byte[] passwordHash, passwordSalt;
@@ -70,8 +73,8 @@ namespace Business.Concrete
             var user = new User
             {
                 Email = request.Email,
-                Name = request.FirstName,
-                Surname = request.LastName,
+                Name = request.Name,
+                Surname = request.Surname,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 StatusId = 1
@@ -82,8 +85,8 @@ namespace Business.Concrete
 
         public IResult UserExists(string email)
         {
-            User userExists = GetByMail(email);
-            if (userExists == null)
+            var userExists = GetByMail(email);
+            if (userExists != null)
             {
                 return new ErrorResult(Messages.UserAlreadyExists);
             }
