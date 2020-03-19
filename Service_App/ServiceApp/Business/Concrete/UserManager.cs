@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
@@ -65,6 +67,7 @@ namespace Business.Concrete
         }
 
         [LogAspect(typeof(JsonFileLogger))]
+        [ValidationAspect(typeof(UserValidator), Priority = 2)]
         public IDataResult<User> Register(Request.User.Register request)
         {
             byte[] passwordHash, passwordSalt;

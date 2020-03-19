@@ -29,24 +29,28 @@ namespace Core.Aspects.Autofac.Logging
             loggerServiceBase.Info(GetLogDetail(invocation));
         }
 
-        protected override void OnException(IInvocation invocation)
+        protected override void OnException(IInvocation invocation, System.Exception e)
         {
-            loggerServiceBase.Error(GetLogDetail(invocation));
+            LogDetail logDetail = GetLogDetail(invocation);
+            logDetail.ExceptionMessage = e.Message;
+            logDetail.LogDate = DateTime.Now;
+            loggerServiceBase.Error(logDetail);
         }
 
         private LogDetail GetLogDetail(IInvocation invocation)
         {
             var logParameters = new List<LogParameter>();
+
             for (int i = 0; i < invocation.Arguments.Length; i++)
             {
                 logParameters.Add(new LogParameter
                 {
                     Name = invocation.GetConcreteMethod().GetParameters()[i].Name,
-                    Value = invocation.Arguments[i].ToString(),
+                    Value = invocation.Arguments[i],
                     Type = invocation.Arguments[i].GetType().Name
+
                 });
             }
-
 
             var logDetail = new LogDetail
             {

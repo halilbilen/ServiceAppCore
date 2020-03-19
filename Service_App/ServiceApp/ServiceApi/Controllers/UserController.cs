@@ -49,11 +49,11 @@ namespace ServiceApi.Controllers
         [HttpPost("register")]
         public ActionResult Register(Request.User.Register request)
         {
-            var userExists = userService.UserExists(request.Email);
-            if (!userExists.Success)
-            {
-                return BadRequest(userExists.Message);
-            }
+            //var userExists = userService.UserExists(request.Email);
+            //if (!userExists.Success)
+            //{
+            //    return BadRequest(userExists.Message);
+            //}
 
             var registerResult = userService.Register(request);
             var result = userService.CreateAccessToken(registerResult.Data);

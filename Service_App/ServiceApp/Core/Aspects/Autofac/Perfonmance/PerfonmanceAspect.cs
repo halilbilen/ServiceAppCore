@@ -30,7 +30,6 @@ namespace Core.Aspects.Autofac.Perfonmance
             if (stopwatch.Elapsed.TotalSeconds > interval)
             {
                 Debug.WriteLine($"Perfonmance:{invocation.Method.DeclaringType.FullName}.{invocation.Method.Name}--->{stopwatch.Elapsed.TotalSeconds}");//Mail atılabilir//
-
             }
             stopwatch.Reset();
         }

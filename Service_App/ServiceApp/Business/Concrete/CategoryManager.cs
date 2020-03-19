@@ -1,7 +1,9 @@
 ﻿using Business.Abstract;
 using Business.Aspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -24,6 +26,8 @@ namespace Business.Concrete
             categoryDal = _categoryDal;
         }
 
+        [ValidationAspect(typeof(CategoryValidator), Priority = 2)]
+        [CacheRemoveAspect(_pattern: "IProductService.Get")]
         public IResult Add(Request.Category.Create request)
         {
             var categories = categoryDal.Get(filter: p => p.Name == request.Name);
@@ -49,7 +53,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Category>(categoryDal.Get(filter: p => p.CategoryId == categoryId));
         }
 
-        [SecuredOperation("Product.List,Admin")]
+        //[SecuredOperation("Product.List,Admin")]
         [CacheAspect(_duration: 10)]
         public IDataResult<List<Category>> GetList()
         {

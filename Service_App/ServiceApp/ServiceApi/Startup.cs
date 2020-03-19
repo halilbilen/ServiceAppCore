@@ -33,8 +33,8 @@ namespace ServiceApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllers();
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowOrigin", builder => builder.WithOrigins("http://localhost:3000"));
@@ -76,12 +76,14 @@ namespace ServiceApi
             }
 
             app.UseCors(builder => builder.WithOrigins("http://localhost:3000").AllowAnyHeader());
-
+            app.ConfigureCustomExceptionMiddleware();
+           
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ServiceApp API V1");
             });
+
             app.UseHttpsRedirection();
             app.UseRouting();
 
