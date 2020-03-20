@@ -1,9 +1,10 @@
 ﻿using Business.Abstract;
-using Business.Aspects.Autofac;
-using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Security;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Messages;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -17,6 +18,7 @@ using System.Text;
 
 namespace Business.Concrete
 {
+    //[LogAspect()]
     public class CategoryManager : ICategoryService
     {
         private ICategoryDal categoryDal;
@@ -53,7 +55,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Category>(categoryDal.Get(filter: p => p.CategoryId == categoryId));
         }
 
-        //[SecuredOperation("Product.List,Admin")]
+       // [SecuredOperation("Product.List,Admin,User")]
         [CacheAspect(_duration: 10)]
         public IDataResult<List<Category>> GetList()
         {

@@ -1,6 +1,4 @@
-﻿using Business.Constants;
-using Castle.DynamicProxy;
-using Core.Extensions;
+﻿using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
@@ -8,8 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
+using Core.Extensions;
+using Core.Utilities.Messages;
+using Core.CrossCuttingConcerns;
+using Core.CrossCuttingConcerns.Logging.NLog;
 
-namespace Business.Aspects.Autofac
+namespace Core.Aspects.Autofac.Security
 {
     public class SecuredOperation : MethodInterception
     {
@@ -31,7 +33,9 @@ namespace Business.Aspects.Autofac
                     return;
                 }
             }
-            throw new Exception(Messages.AuthorizationDenied);
+            Exception e = new Exception(Messages.AuthorizationDenied);
+            Log.NLog(LogType.Error, e.Message);
+            throw e;
         }
     }
 }

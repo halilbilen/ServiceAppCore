@@ -1,13 +1,16 @@
-﻿using Core.Entity.Concrete;
-using Entities.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
-namespace Business.Constants
+namespace Core.Utilities.Messages
 {
-    public class Messages
+    public static class Messages
     {
+        public static string WrongValidationType = "Wrong Validation type";
+
+        public static string WrongLoggerType = "Wrong Logger type";
+
         public static string UserNotFound = "Kullanıcı Bulunamadi";
         public static string PasswordError = "Şifre Hatali";
         public static string SuccessLogin = "Giris Basarili";

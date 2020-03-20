@@ -12,5 +12,12 @@ namespace Core.DataAccess
         void Add(T entity);
         void Update(T entity);
         void Delete(T entity);
+        IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate);
+        IEnumerable<T> FindByAsNoTracking(Expression<Func<T, bool>> predicate);
+        T FirstBy(Expression<Func<T, bool>> predicate);
+        T FirstByAsNoTracking(Expression<Func<T, bool>> predicate);
+        T GetById(int id);
+        T GetByIdAsNoTracking(int id);
+        void Save();
     }
 }

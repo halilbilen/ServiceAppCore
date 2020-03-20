@@ -10,14 +10,13 @@ using System.Text;
 
 namespace Core.DataAccess.EntityFramework
 {
+    //[LogAspect()]
     public class EfBaseRepository<TEntity, TContext> : IEntityRepository<TEntity>
         where TEntity : class
         where TContext : DbContext, new()
     {
         public TContext _context { get; set; } = new TContext();
 
-
-        [LogAspect(typeof(JsonFileLogger))]
         public void Add(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);
@@ -52,6 +51,40 @@ namespace Core.DataAccess.EntityFramework
         public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public IEnumerable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
+        {
+            IEnumerable<TEntity> query = _context.Set<TEntity>().Where(predicate);
+            return query;
+        }
+
+        public IEnumerable<TEntity> FindByAsNoTracking(Expression<Func<TEntity, bool>> predicate)
+        {
+            IEnumerable<TEntity> query = _context.Set<TEntity>().AsNoTracking().Where(predicate);
+            return query;
+        }
+
+        public TEntity FirstBy(Expression<Func<TEntity, bool>> predicate)
+        {
+            var query = _context.Set<TEntity>().FirstOrDefault(predicate);
+            return query;
+        }
+
+        public TEntity FirstByAsNoTracking(Expression<Func<TEntity, bool>> predicate)
+        {
+            var query = _context.Set<TEntity>().AsNoTracking().FirstOrDefault(predicate);
+            return query;
+        }
+
+        public TEntity GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TEntity GetByIdAsNoTracking(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
