@@ -21,7 +21,6 @@ namespace Entities.Concrete
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<CompanyComment> CompanyComment { get; set; }
         public virtual DbSet<CompanyMedia> CompanyMedia { get; set; }
-        public virtual DbSet<CompanyVote> CompanyVote { get; set; }
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<Expertise> Expertise { get; set; }
         public virtual DbSet<OperationClaim> OperationClaim { get; set; }
@@ -227,6 +226,8 @@ namespace Entities.Concrete
                     .HasDefaultValueSql("'1'");
 
                 entity.Property(e => e.UserId).HasColumnType("int(11)");
+
+                entity.Property(e => e.Vote).HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<CompanyMedia>(entity =>
@@ -262,33 +263,6 @@ namespace Entities.Concrete
                     .HasColumnType("varchar(500)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
-            });
-
-            modelBuilder.Entity<CompanyVote>(entity =>
-            {
-                entity.Property(e => e.CompanyVoteId).HasColumnType("int(11)");
-
-                entity.Property(e => e.CompanyId).HasColumnType("int(11)");
-
-                entity.Property(e => e.CreatedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.CreatedUserId).HasColumnType("int(11)");
-
-                entity.Property(e => e.ModifiedDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.ModifiedUserId).HasColumnType("int(11)");
-
-                entity.Property(e => e.StatusId)
-                    .HasColumnType("int(11)")
-                    .HasDefaultValueSql("'1'");
-
-                entity.Property(e => e.UserId).HasColumnType("int(11)");
-
-                entity.Property(e => e.Vote).HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<Country>(entity =>

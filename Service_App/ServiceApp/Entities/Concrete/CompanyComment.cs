@@ -8,6 +8,7 @@ namespace Entities.Concrete
         public int CompanyCommentId { get; set; }
         public int? CompanyId { get; set; }
         public int? UserId { get; set; }
+        public int? Vote { get; set; }
         public string Comment { get; set; }
         public int? CreatedUserId { get; set; }
         public DateTime? CreatedDate { get; set; }
