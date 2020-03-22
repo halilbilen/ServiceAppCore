@@ -18,34 +18,34 @@ namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-        private IUserDal userDal;
-        private ITokenHelper tokenHelper;
+        private IUserDal _userDal;
+        private ITokenHelper _tokenHelper;
 
-        public UserManager(IUserDal _userDal, ITokenHelper _tokenHelper)
+        public UserManager(IUserDal userDal, ITokenHelper tokenHelper)
         {
-            userDal = _userDal;
-            tokenHelper = _tokenHelper;
+            _userDal = userDal;
+            _tokenHelper = tokenHelper;
         }
 
         public void Add(User user)
         {
-            userDal.Add(user);
+            _userDal.Add(user);
         }
 
         public User GetByMail(string email)
         {
-            return userDal.Get(u => u.Email == email);
+            return _userDal.Get(u => u.Email == email);
         }
 
         public List<OperationClaim> GetClaims(User user)
         {
-            return userDal.GetClaims(user);
+            return _userDal.GetClaims(user);
         }
 
         public IDataResult<AccessToken> CreateAccessToken(User user)
         {
-            var claims = userDal.GetClaims(user);
-            var accessToken = tokenHelper.CreateToken(user, claims);
+            var claims = _userDal.GetClaims(user);
+            var accessToken = _tokenHelper.CreateToken(user, claims);
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
 
@@ -82,7 +82,7 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 StatusId = 1
             };
-            userDal.Add(user);
+            _userDal.Add(user);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 

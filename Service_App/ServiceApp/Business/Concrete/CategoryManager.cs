@@ -21,18 +21,18 @@ namespace Business.Concrete
     //[LogAspect()]
     public class CategoryManager : ICategoryService
     {
-        private ICategoryDal categoryDal;
+        private ICategoryDal _categoryDal;
 
-        public CategoryManager(ICategoryDal _categoryDal)
+        public CategoryManager(ICategoryDal categoryDal)
         {
-            categoryDal = _categoryDal;
+            _categoryDal = categoryDal;
         }
 
         [ValidationAspect(typeof(CategoryValidator), Priority = 2)]
         [CacheRemoveAspect(_pattern: "IProductService.Get")]
         public IResult Add(Request.Category.Create request)
         {
-            var categories = categoryDal.Get(filter: p => p.Name == request.Name);
+            var categories = _categoryDal.Get(filter: p => p.Name == request.Name);
             if (categories != null) { return new ErrorResult(Messages.ExistsCategory); }
             var c = new Category
             {
@@ -40,31 +40,31 @@ namespace Business.Concrete
                 Description = request.Description,
                 CreatedUserId = 1
             };
-            categoryDal.Add(c);
+            _categoryDal.Add(c);
             return new SuccessResult(Messages.CategoryAdded);
         }
 
         public IResult Delete(Category category)
         {
-            categoryDal.Delete(category);
+            _categoryDal.Delete(category);
             return new SuccessResult(Messages.CategoryDeleted);
         }
 
         public IDataResult<Category> GetById(int categoryId)
         {
-            return new SuccessDataResult<Category>(categoryDal.Get(filter: p => p.CategoryId == categoryId));
+            return new SuccessDataResult<Category>(_categoryDal.Get(filter: p => p.CategoryId == categoryId));
         }
 
-       // [SecuredOperation("Product.List,Admin,User")]
+        // [SecuredOperation("Product.List,Admin,User")]
         [CacheAspect(_duration: 10)]
         public IDataResult<List<Category>> GetList()
         {
-            return new SuccessDataResult<List<Category>>(categoryDal.GetList().ToList());
+            return new SuccessDataResult<List<Category>>(_categoryDal.GetList().ToList());
         }
 
         public IResult Update(Category category)
         {
-            categoryDal.Update(category);
+            _categoryDal.Update(category);
             return new SuccessResult(Messages.CategoryUpdated);
         }
     }
