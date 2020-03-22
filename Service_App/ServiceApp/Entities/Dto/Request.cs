@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Entities.Dto
 {
@@ -9,8 +10,11 @@ namespace Entities.Dto
     {
         public class Common
         {
+            [JsonIgnore]
             public string ClientIp { get; set; }
+            [JsonIgnore]
             public string ClientUserAgent { get; set; }
+            [JsonIgnore]
             public string AcceptLanguage { get; set; }
         }
 
@@ -48,6 +52,14 @@ namespace Entities.Dto
                 public string Name { get; set; }
                 public string Description { get; set; }
                 public IFormFile Media { get; set; }
+            }
+        }
+
+        public class Company : Common
+        {
+            public class Get : Common
+            {
+                public int Id { get; set; }
             }
         }
     }

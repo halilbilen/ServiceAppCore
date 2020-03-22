@@ -10,7 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ServiceApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Produces("application/json")]
+    [Route("[controller]/[action]")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -21,7 +22,7 @@ namespace ServiceApi.Controllers
             categoryService = _categoryService;
         }
 
-        [HttpGet("getall")]
+        [HttpGet]
         public IActionResult GetList()
         {
             var result = categoryService.GetList();
@@ -32,10 +33,10 @@ namespace ServiceApi.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpGet("getbyid")]
+        [HttpGet]
         public IActionResult GetById(int CategoryId)
         {
-            
+
             var result = categoryService.GetById(CategoryId);
             if (result.Success)
             {
@@ -44,7 +45,7 @@ namespace ServiceApi.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult Add([FromForm]Request.Category.Create request)
         {
             if (request == null) { return BadRequest(); }
@@ -56,7 +57,7 @@ namespace ServiceApi.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpPost("update")]
+        [HttpPost]
         public IActionResult Update([FromBody]Category Category)
         {
             if (Category == null) { return BadRequest(); }
@@ -68,7 +69,7 @@ namespace ServiceApi.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpPost("delete")]
+        [HttpPost]
         public IActionResult Delete([FromBody]Category Category)
         {
             if (Category == null) { return BadRequest(); }

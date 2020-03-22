@@ -10,34 +10,34 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ServiceApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Produces("application/json")]
+    [Route("[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private IUserService userService;
+        private IUserService _userService;
         private IHttpContextAccessor accessor;
 
-        public UserController(IUserService _userService, IHttpContextAccessor _accessor)
+        public UserController(IUserService userService, IHttpContextAccessor _accessor)
         {
-            userService = _userService;
+            _userService = userService;
             accessor = _accessor;
-
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         public ActionResult Login(Request.User.Login request)
         {
             request.ClientIp = accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             request.ClientUserAgent = accessor.HttpContext.Request.Headers["User-Agent"].ToString();
             request.AcceptLanguage = accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
 
-            var userToLogin = userService.Login(request);
+            var userToLogin = _userService.Login(request);
             if (!userToLogin.Success)
             {
                 return BadRequest(userToLogin.Message);
             }
 
-            var result = userService.CreateAccessToken(userToLogin.Data);
+            var result = _userService.CreateAccessToken(userToLogin.Data);
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -46,7 +46,7 @@ namespace ServiceApi.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpPost("register")]
+        [HttpPost]
         public ActionResult Register(Request.User.Register request)
         {
             //var userExists = userService.UserExists(request.Email);
@@ -55,8 +55,8 @@ namespace ServiceApi.Controllers
             //    return BadRequest(userExists.Message);
             //}
 
-            var registerResult = userService.Register(request);
-            var result = userService.CreateAccessToken(registerResult.Data);
+            var registerResult = _userService.Register(request);
+            var result = _userService.CreateAccessToken(registerResult.Data);
 
             if (result.Success)
             {

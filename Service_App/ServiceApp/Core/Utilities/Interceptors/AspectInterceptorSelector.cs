@@ -20,7 +20,7 @@ namespace Core.Utilities.Interceptors
             classAttributes.AddRange(methodAttributes);
             //classAttributes.Add(new LogAspect(typeof(JsonFileLogger)));
             classAttributes.Add(new LogAspect());
-            classAttributes.Add(new SecuredOperation("User"));
+            //classAttributes.Add(new SecuredOperation("User"));
             return classAttributes.OrderBy(x => x.Priority).ToArray();
         }
     }
