@@ -76,15 +76,5 @@ namespace Core.DataAccess.EntityFramework
             var query = _context.Set<TEntity>().AsNoTracking().FirstOrDefault(predicate);
             return query;
         }
-
-        public TEntity GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TEntity GetByIdAsNoTracking(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

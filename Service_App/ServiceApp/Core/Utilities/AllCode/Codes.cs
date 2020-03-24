@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Core.Utilities.AllCode
@@ -13,5 +14,27 @@ namespace Core.Utilities.AllCode
         InvalidEmail = 1009,
         ExistEmail = 1010,
         InvalidPassword = 1022
+    }
+
+    public enum Status
+    {
+        [Description("Pasif")]
+        Passive = 0,
+        [Description("Aktif")]
+        Active = 1,
+        [Description("Silindi")]
+        Deleted = 2
+    }
+
+    public enum UserStatus
+    {
+        [Description("Pasif")]
+        Passive = Status.Passive,
+        [Description("Aktif")]
+        Active = Status.Active,
+        [Description("Silindi")]
+        Deleted = Status.Deleted,
+        [Description("Doğrulama bekliyor")]
+        EmailVerificationExpected = 3
     }
 }

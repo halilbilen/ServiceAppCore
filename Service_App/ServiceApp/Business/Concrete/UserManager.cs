@@ -18,6 +18,7 @@ namespace Business.Concrete
     {
         IUserDal _userDal;
         private ITokenHelper _tokenHelper;
+        public byte[] passwordHash, passwordSalt;
 
         public UserManager(IUserDal userDal, ITokenHelper tokenHelper)
         {
@@ -27,7 +28,22 @@ namespace Business.Concrete
 
         public Entities.Dto.Response.User.ChangePassword ChangePassword(Entities.Dto.Request.User.ChangePassword request)
         {
-            throw new NotImplementedException();
+            var user = _userDal.GetById(request.UserId);
+            if (user == null)
+            {
+                return new Entities.Dto.Response.User.ChangePassword { ReturnCode = Value.UserNotFound.ToInteger(), ReturnMessage = Messages.UserNotFound };
+            }
+            if (!HashingHelper.VerifyPasswordHash(request.OldPassword, user.PasswordHash, passwordSalt: user.PasswordSalt))
+            {
+                return new Entities.Dto.Response.User.ChangePassword { ReturnCode = Value.InvalidPassword.ToInteger(), ReturnMessage = Messages.UserNotFound };
+            }
+            HashingHelper.CreatePasswordHash(request.NewPassword, out passwordHash, out passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            user.ModifiedUserId = user.UserId;
+            user.ModifiedDate = DateTime.Now;
+            _userDal.Update(user);
+            return new Entities.Dto.Response.User.ChangePassword { };
         }
 
         public AccessToken CreateAccessToken(User user)
@@ -53,7 +69,7 @@ namespace Business.Concrete
         public Entities.Dto.Response.User.Login Login(Entities.Dto.Request.User.Login request)
         {
             var userCheck = UserExists(request.Email);
-            if (userCheck == null)
+            if (userCheck == null || userCheck.StatusId != UserStatus.Active.ToInteger())
             {
                 return new Entities.Dto.Response.User.Login { ReturnCode = Value.UserNotFound.ToInteger(), ReturnMessage = Messages.UserNotFound };
             }
@@ -74,7 +90,7 @@ namespace Business.Concrete
                 return new Entities.Dto.Response.User.Register { ReturnCode = Value.ExistEmail.ToInteger(), ReturnMessage = Messages.UserAlreadyExists };
             }
 
-            byte[] passwordHash, passwordSalt;
+
             HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
             var user = new Entities.Concrete.User
             {
@@ -83,7 +99,7 @@ namespace Business.Concrete
                 Surname = request.Surname,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                StatusId = 1
+                StatusId = UserStatus.EmailVerificationExpected.ToInteger()
             };
             var token = CreateAccessToken(user);
             _userDal.Add(user);

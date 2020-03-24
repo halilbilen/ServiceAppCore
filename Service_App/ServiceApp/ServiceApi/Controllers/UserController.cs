@@ -49,5 +49,19 @@ namespace ServiceApi.Controllers
 
             return Ok(new Response<User.Register> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
         }
+
+        [HttpPost]
+        public ActionResult ChangePassword(Entities.Dto.Request.User.ChangePassword request)
+        {
+            if (request == null) { return BadRequest(); }
+
+            request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
+            request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
+
+            var result = _userService.ChangePassword(request);
+
+            return Ok(new Response<User.ChangePassword> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
+        }
     }
 }

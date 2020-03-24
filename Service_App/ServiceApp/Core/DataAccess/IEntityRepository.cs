@@ -16,8 +16,6 @@ namespace Core.DataAccess
         IEnumerable<T> FindByAsNoTracking(Expression<Func<T, bool>> predicate);
         T FirstBy(Expression<Func<T, bool>> predicate);
         T FirstByAsNoTracking(Expression<Func<T, bool>> predicate);
-        T GetById(int id);
-        T GetByIdAsNoTracking(int id);
         void Save();
     }
 }

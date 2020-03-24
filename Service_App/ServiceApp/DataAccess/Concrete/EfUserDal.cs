@@ -10,6 +10,11 @@ namespace DataAccess.Concrete
 {
     public class EfUserDal : EfBaseRepository<User, ServiceAppContext>, IUserDal
     {
+        public User GetById(int userId)
+        {
+            return Get(filter: p => p.UserId == userId);
+        }
+
         public List<OperationClaim> GetClaims(User user)
         {
             using (var context = new ServiceAppContext())
