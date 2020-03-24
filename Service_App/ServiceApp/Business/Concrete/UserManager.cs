@@ -1,24 +1,22 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
-using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.Utilities.Messages;
-using Core.Utilities.Results;
+using Core.Utilities.AllCode;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JsonWebToken;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Extensions;
 
 namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-        private IUserDal _userDal;
+        IUserDal _userDal;
         private ITokenHelper _tokenHelper;
 
         public UserManager(IUserDal userDal, ITokenHelper tokenHelper)
@@ -27,53 +25,58 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
         }
 
-        public void Add(User user)
+        public Entities.Dto.Response.User.ChangePassword ChangePassword(Entities.Dto.Request.User.ChangePassword request)
         {
-            _userDal.Add(user);
+            throw new NotImplementedException();
         }
 
-        public User GetByMail(string email)
-        {
-            return _userDal.Get(u => u.Email == email);
-        }
-
-        public List<OperationClaim> GetClaims(User user)
-        {
-            return _userDal.GetClaims(user);
-        }
-
-        public IDataResult<AccessToken> CreateAccessToken(User user)
+        public AccessToken CreateAccessToken(User user)
         {
             var claims = _userDal.GetClaims(user);
             var accessToken = _tokenHelper.CreateToken(user, claims);
-            return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
+            return accessToken;
         }
 
-        public IDataResult<User> Login(Request.User.Login request)
+        public Entities.Dto.Response.User.ForgotPassword ForgotPassword(Entities.Dto.Request.User.ForgotPassword request)
         {
-            var userCheck = GetByMail(request.Email);
+            throw new NotImplementedException();
+        }
 
+        public User UserExists(string email)
+        {
+            var user = _userDal.FirstBy(p => p.Email == email);
+            if (user == null) { return null; }
+            return user;
+        }
+
+        //[ValidationAspect(typeof(UserValidator), Priority = 2)]
+        public Entities.Dto.Response.User.Login Login(Entities.Dto.Request.User.Login request)
+        {
+            var userCheck = UserExists(request.Email);
             if (userCheck == null)
             {
-                return new ErrorDataResult<User>(Messages.UserNotFound);
+                return new Entities.Dto.Response.User.Login { ReturnCode = Value.UserNotFound.ToInteger(), ReturnMessage = Messages.UserNotFound };
             }
-
             if (!HashingHelper.VerifyPasswordHash(request.Password, userCheck.PasswordHash, passwordSalt: userCheck.PasswordSalt))
             {
-                return new ErrorDataResult<User>(Messages.PasswordError);
+                return new Entities.Dto.Response.User.Login { ReturnCode = Value.InvalidPassword.ToInteger(), ReturnMessage = Messages.UserNotFound };
             }
-
-            return new SuccessDataResult<User>(userCheck, Messages.SuccessLogin);
+            var token = CreateAccessToken(userCheck);
+            return new Entities.Dto.Response.User.Login { Token = token.Token, ReturnCode = Value.Success.ToInteger(), ReturnMessage = Messages.SuccessLogin };
         }
 
-        // [LogAspect(typeof(JsonFileLogger))]
         [ValidationAspect(typeof(UserValidator), Priority = 2)]
-        public IDataResult<User> Register(Request.User.Register request)
+        public Entities.Dto.Response.User.Register Register(Entities.Dto.Request.User.Register request)
         {
+            var userExists = UserExists(request.Email);
+            if (userExists != null)
+            {
+                return new Entities.Dto.Response.User.Register { ReturnCode = Value.ExistEmail.ToInteger(), ReturnMessage = Messages.UserAlreadyExists };
+            }
+
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
-
-            var user = new User
+            var user = new Entities.Concrete.User
             {
                 Email = request.Email,
                 Name = request.Name,
@@ -82,19 +85,9 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 StatusId = 1
             };
+            var token = CreateAccessToken(user);
             _userDal.Add(user);
-            return new SuccessDataResult<User>(user, Messages.UserRegistered);
-        }
-
-        public IResult UserExists(string email)
-        {
-            var userExists = GetByMail(email);
-            if (userExists != null)
-            {
-                return new ErrorResult(Messages.UserAlreadyExists);
-            }
-
-            return new SuccessResult();
+            return new Entities.Dto.Response.User.Register { Token = token.Token, ReturnCode = 200, ReturnMessage = Messages.UserRegistered };
         }
     }
 }

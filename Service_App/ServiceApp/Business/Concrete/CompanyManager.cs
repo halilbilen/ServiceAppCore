@@ -28,9 +28,9 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        public Entities.Dto.Response.Company.List GetCompany(Request.Company.Get request)
+        public Entities.Dto.Response.Company.List GetCompany(Entities.Dto.Request.Company.Get request)
         {
-            var company = _companyDal.Get(filter: p => p.CompanyId == request.Id);
+            var company = _companyDal.Get(filter: p => p.CompanyId == request.CompanyId);
             if (company == null)
             {
                 return new Entities.Dto.Response.Company.List { ReturnCode = 10, ExceptionMessage = "Error" };

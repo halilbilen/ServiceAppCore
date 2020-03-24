@@ -9,7 +9,7 @@ namespace Business.Abstract
 {
     public interface ICompanyService
     {
-        Entities.Dto.Response.Company.List GetCompany(Request.Company.Get request);
+        Entities.Dto.Response.Company.List GetCompany(Entities.Dto.Request.Company.Get request);
         IDataResult<List<Company>> GetList();
         IResult Add(Company company);
         IResult Delete(Company company);

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public class UserValidator : AbstractValidator<Request.User.Register>
+    public class UserValidator : AbstractValidator<Entities.Dto.Request.User.Register>
     {
         public UserValidator()
         {

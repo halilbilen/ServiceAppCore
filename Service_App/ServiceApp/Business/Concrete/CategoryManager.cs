@@ -8,7 +8,6 @@ using Core.Utilities.Messages;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.Dto;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -30,7 +29,7 @@ namespace Business.Concrete
 
         [ValidationAspect(typeof(CategoryValidator), Priority = 2)]
         [CacheRemoveAspect(_pattern: "IProductService.Get")]
-        public IResult Add(Request.Category.Create request)
+        public IResult Add(Entities.Dto.Request.Category.Create request)
         {
             var categories = _categoryDal.Get(filter: p => p.Name == request.Name);
             if (categories != null) { return new ErrorResult(Messages.ExistsCategory); }

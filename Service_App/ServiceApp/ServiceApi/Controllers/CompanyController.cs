@@ -25,7 +25,7 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetById([FromBody]Entities.Dto.Request.Company.Get request)
+        public IActionResult Get([FromBody]Entities.Dto.Request.Company.Get request)
         {
             request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();

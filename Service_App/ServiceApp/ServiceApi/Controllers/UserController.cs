@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
-using Entities.Concrete;
 using Entities.Dto;
+using Entities.Dto.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,57 +13,41 @@ namespace ServiceApi.Controllers
     [Produces("application/json")]
     [Route("[controller]/[action]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
         private IUserService _userService;
-        private IHttpContextAccessor accessor;
 
-        public UserController(IUserService userService, IHttpContextAccessor _accessor)
+        public UserController(IUserService userService, IHttpContextAccessor accessor) : base(accessor)
         {
             _userService = userService;
-            accessor = _accessor;
+            _accessor = accessor;
         }
 
         [HttpPost]
-        public ActionResult Login(Request.User.Login request)
+        public ActionResult Login(Entities.Dto.Request.User.Login request)
         {
-            request.ClientIp = accessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            request.ClientUserAgent = accessor.HttpContext.Request.Headers["User-Agent"].ToString();
-            request.AcceptLanguage = accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
+            if (request == null) { return BadRequest(); }
 
-            var userToLogin = _userService.Login(request);
-            if (!userToLogin.Success)
-            {
-                return BadRequest(userToLogin.Message);
-            }
+            request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
+            request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
 
-            var result = _userService.CreateAccessToken(userToLogin.Data);
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-
-            return BadRequest(result.Message);
+            var result = _userService.Login(request);
+            return Ok(new Entities.Dto.Response.Response<User.Login> { ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage, Data = result });
         }
 
         [HttpPost]
-        public ActionResult Register(Request.User.Register request)
+        public ActionResult Register(Entities.Dto.Request.User.Register request)
         {
-            //var userExists = userService.UserExists(request.Email);
-            //if (!userExists.Success)
-            //{
-            //    return BadRequest(userExists.Message);
-            //}
+            if (request == null) { return BadRequest(); }
 
-            var registerResult = _userService.Register(request);
-            var result = _userService.CreateAccessToken(registerResult.Data);
+            request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
+            request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
 
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
+            var result = _userService.Register(request);
 
-            return BadRequest(result.Message);
+            return Ok(new Response<User.Register> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Entities.Dto.Response
         public int ReturnCode { get; set; }
         public string CultureInfo { get; set; }
         public string ReturnMessage { get; set; }
-        public bool Success => ReturnCode.Equals(0);
+        public bool Success => ReturnCode.Equals(200);
         public string ExceptionMessage { get; set; }
         public Base()
         {
@@ -37,6 +37,28 @@ namespace Entities.Dto.Response
             public string Name { get; set; }
             public string CityCode { get; set; }
         }
+    }
 
+    public class User
+    {
+        public class Register : Base
+        {
+            public string Token { get; set; }
+        }
+
+        public class Login : Base
+        {
+            public string Token { get; set; }
+        }
+
+        public class ForgotPassword : Base
+        {
+
+        }
+
+        public class ChangePassword : Base
+        {
+
+        }
     }
 }

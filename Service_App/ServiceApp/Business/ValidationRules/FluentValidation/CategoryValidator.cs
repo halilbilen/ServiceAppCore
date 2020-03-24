@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public class CategoryValidator : AbstractValidator<Category>
+    public class CategoryValidator : AbstractValidator<Entities.Dto.Request.Category.Create>
     {
         public CategoryValidator()
         {

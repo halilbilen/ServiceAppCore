@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Entities.Concrete;
-using Entities.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,7 +45,7 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromForm]Request.Category.Create request)
+        public IActionResult Add([FromForm]Entities.Dto.Request.Category.Create request)
         {
             if (request == null) { return BadRequest(); }
             var result = categoryService.Add(request);

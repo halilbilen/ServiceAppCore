@@ -10,7 +10,7 @@ namespace Business.Concrete
 {
     public class CategoryMediaManager : ICategoryMediaService
     {
-        public IResult Add(Request.CategoryMedia.Create Category)
+        public IResult Add(Entities.Dto.Request.CategoryMedia.Create Category)
         {
             throw new NotImplementedException();
         }

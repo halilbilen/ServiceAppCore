@@ -9,7 +9,7 @@ namespace Business.Abstract
 {
     public interface ICategoryMediaService
     {
-        IResult Add(Request.CategoryMedia.Create Category);
+        IResult Add(Entities.Dto.Request.CategoryMedia.Create Category);
         IResult Delete(CategoryMedia Category);
         IResult Update(CategoryMedia Category);
     }
