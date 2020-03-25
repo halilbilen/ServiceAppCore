@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
     public interface IServiceService
     {
-        Entities.Dto.Response.Service.List GetList(Entities.Dto.Request.Service.List request);
+        Task<Entities.Dto.Response.Service.List> GetByCategoryId(Entities.Dto.Request.Service.List request);
     }
 }

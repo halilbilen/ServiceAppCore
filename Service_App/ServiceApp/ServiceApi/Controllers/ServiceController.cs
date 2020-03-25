@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Entities.Dto.Response;
 using Business.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,16 +16,16 @@ namespace ServiceApi.Controllers
 
         public ServiceController(IServiceService serviceService, IHttpContextAccessor accessor) : base(accessor)
         {
-            _serviceService = serviceService;
             _accessor = accessor;
+            _serviceService = serviceService;
         }
 
         [HttpPost]
-        public IActionResult GetList(Entities.Dto.Request.Service.List request)
+        public async Task<IActionResult> GetAll(Entities.Dto.Request.Service.List? request)
         {
-            var result = _serviceService.GetList(request);
-
-            return Ok(new Entities.Dto.Response.Response<Service.List> { ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage, Data = result });
+            if (request.Page <= 0) { request.Page = 1; }
+            var result = await _serviceService.GetByCategoryId(request);
+            return Ok(new Entities.Dto.Response.Response<Entities.Dto.Response.Service.List> { ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage, Data = result });
         }
     }
 }

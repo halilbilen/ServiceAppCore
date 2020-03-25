@@ -32,5 +32,7 @@ namespace Core.Utilities.Messages
         public static string PasswordLenght = "Password 6-100 uzunlugunda olmali";
 
         public static string ServiceNotFound = "Service Bulunamadi";
+
+        public static string Success = "Success";
     }
 }

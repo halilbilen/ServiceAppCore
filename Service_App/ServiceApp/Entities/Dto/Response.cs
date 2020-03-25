@@ -1,6 +1,8 @@
 ﻿using Entities.Concrete;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -15,20 +17,6 @@ namespace Entities.Dto.Response
         public Response()
         {
             ReturnMessage = string.Empty;
-        }
-    }
-
-    public class Base
-    {
-        public int ReturnCode { get; set; }
-        public string CultureInfo { get; set; }
-        public string ReturnMessage { get; set; }
-        public bool Success => ReturnCode.Equals(200);
-        public string ExceptionMessage { get; set; }
-        public Base()
-        {
-            ExceptionMessage = string.Empty;
-            CultureInfo = string.Empty;
         }
     }
 
@@ -47,6 +35,21 @@ namespace Entities.Dto.Response
     {
         public IEnumerable<Entities.Concrete.Service> Services { get; set; }
         public Paging PagingInfo { get; set; }
+    }
+
+    public class Base
+    {
+        public int ReturnCode { get; set; }
+        public string CultureInfo { get; set; }
+        public string ReturnMessage { get; set; }
+        [NotMapped]
+        public bool Success => ReturnCode.Equals(200);
+        public string ExceptionMessage { get; set; }
+        public Base()
+        {
+            ExceptionMessage = string.Empty;
+            CultureInfo = string.Empty;
+        }
     }
 
     public class Company

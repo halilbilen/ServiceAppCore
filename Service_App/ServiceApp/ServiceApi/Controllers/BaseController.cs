@@ -10,7 +10,7 @@ namespace ServiceApi.Controllers
     [ApiController]
     public class BaseController : ControllerBase
     {
-
+        public int pageSize = 3;
         public IHttpContextAccessor _accessor;
         public BaseController(IHttpContextAccessor accessor)
         {

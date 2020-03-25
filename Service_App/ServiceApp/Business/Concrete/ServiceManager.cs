@@ -3,12 +3,12 @@ using Core.Extensions;
 using Core.Utilities.AllCode;
 using Core.Utilities.Messages;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -21,7 +21,7 @@ namespace Business.Concrete
             _serviceDal = serviceDal;
         }
 
-        public Entities.Dto.Response.Service.List GetList(Entities.Dto.Request.Service.List request)
+        public async Task<Entities.Dto.Response.Service.List> GetByCategoryId(Entities.Dto.Request.Service.List request)
         {
             int pageSize = 3;
             if (request.CategoryId <= 0)
@@ -34,18 +34,20 @@ namespace Business.Concrete
                 return new Entities.Dto.Response.Service.List { ReturnCode = Value.ServiceNotFound.ToInteger(), ReturnMessage = Messages.ServiceNotFound };
             }
 
-            int count = service.Count();
-            service = service.Skip((request.Page - 1) * pageSize).Take(pageSize);
+            var count = await service.CountAsync();
+            var items = await service.Skip((request.Page - 1) * pageSize).Take(pageSize).ToListAsync();
 
             var list = new Entities.Dto.Response.Service.List
             {
-                Services = service,
+                Services = items,
                 PagingInfo = new Entities.Dto.Response.Paging()
                 {
                     CurrentPage = request.Page,
                     ItemsPerPage = pageSize,
                     TotalItems = count
-                }
+                },
+                ReturnCode = Value.Success.ToInteger(),
+                ReturnMessage = Messages.Success
             };
             return list;
         }
