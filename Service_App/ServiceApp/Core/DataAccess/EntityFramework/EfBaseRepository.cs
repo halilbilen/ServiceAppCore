@@ -76,5 +76,10 @@ namespace Core.DataAccess.EntityFramework
             var query = _context.Set<TEntity>().AsNoTracking().FirstOrDefault(predicate);
             return query;
         }
+
+        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
+        {
+            return filter == null ? _context.Set<TEntity>() : _context.Set<TEntity>().Where(filter);
+        }
     }
 }

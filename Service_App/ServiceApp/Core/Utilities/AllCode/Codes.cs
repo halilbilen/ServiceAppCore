@@ -9,11 +9,13 @@ namespace Core.Utilities.AllCode
     {
         Success = 200,
         BadRequest = 400,
+        CategoryNotFound = 404,
         InternalServerError = 500,
         UserNotFound = 1004,
         InvalidEmail = 1009,
         ExistEmail = 1010,
-        InvalidPassword = 1022
+        InvalidPassword = 1022,
+        ServiceNotFound = 1023
     }
 
     public enum Status

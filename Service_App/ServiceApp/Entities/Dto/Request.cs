@@ -1,4 +1,4 @@
-﻿    using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,37 +9,6 @@ namespace Entities.Dto.Request
     public class Request
     {
 
-    }
-
-    public class Paging
-    {
-        private int _page;
-        public int Page
-        {
-            get
-            {
-                return _page <= 0 ? 1 : _page;
-            }
-            set
-            {
-                _page = value;
-            }
-        }
-        private int _count;
-        [JsonIgnore]
-        public int Count
-        {
-            get
-            {
-                return _count <= 0 ? int.MaxValue : _count;
-            }
-            set
-            {
-                _count = value;
-            }
-        }
-        [JsonIgnore]
-        public int Offset => Page <= 0 ? 0 : (Page - 1) * Count;
     }
 
     public class Common
@@ -89,10 +58,19 @@ namespace Entities.Dto.Request
             public string Description { get; set; }
             public IFormFile Media { get; set; }
         }
+    }
 
-        public class List:Paging
+    public class Service : Common
+    {
+        public class List : Common
         {
+            public int CategoryId { get; set; }
+            public int Page { get; set; }
 
+            public List()
+            {
+                Page = 1;
+            }
         }
     }
 

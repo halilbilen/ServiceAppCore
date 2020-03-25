@@ -24,10 +24,13 @@ namespace Core.Utilities.Messages
         public static string CategoryAdded = "Category Eklendi";
         public static string CategoryDeleted = "Category Silindi";
         public static string CategoryUpdated = "Category Eklendi";
+        public static string CategoryNotFound = "Category Bulunamadi";
         public static string ExistsCategory = "Mevcut Category";
 
         public static string NotMail = "Mail Degil";
 
         public static string PasswordLenght = "Password 6-100 uzunlugunda olmali";
+
+        public static string ServiceNotFound = "Service Bulunamadi";
     }
 }
