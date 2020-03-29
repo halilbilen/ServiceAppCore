@@ -4,6 +4,8 @@ using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Logging;
 using Core.Aspects.Autofac.Security;
 using Core.Aspects.Autofac.Validation;
+using Core.Extensions;
+using Core.Utilities.AllCode;
 using Core.Utilities.Messages;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -30,14 +32,14 @@ namespace Business.Concrete
         //[CacheRemoveAspect(_pattern: "IProductService.Get")]  Add islemine koy
         public IDataResult<Category> GetById(int categoryId)
         {
-            return new SuccessDataResult<Category>(_categoryDal.Get(filter: p => p.CategoryId == categoryId));
+            return new SuccessDataResult<Category>(_categoryDal.Get(filter: p => p.CategoryId == categoryId && p.StatusId == Status.Active.ToInteger()));
         }
 
         // [SecuredOperation("Product.List,Admin,User")]
-        [CacheAspect(_duration: 10)]
+        //[CacheAspect(_duration: 10)]
         public IDataResult<List<Category>> GetList()
         {
-            return new SuccessDataResult<List<Category>>(_categoryDal.GetList().ToList());
+            return new SuccessDataResult<List<Category>>(_categoryDal.GetAll(p => p.StatusId == Status.Active.ToInteger()).ToList());
         }
     }
 }

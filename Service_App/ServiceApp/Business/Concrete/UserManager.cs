@@ -35,7 +35,7 @@ namespace Business.Concrete
             }
             if (!HashingHelper.VerifyPasswordHash(request.OldPassword, user.PasswordHash, passwordSalt: user.PasswordSalt))
             {
-                return new Entities.Dto.Response.User.ChangePassword { ReturnCode = Value.InvalidPassword.ToInteger(), ReturnMessage = Messages.UserNotFound };
+                return new Entities.Dto.Response.User.ChangePassword { ReturnCode = Value.InvalidPassword.ToInteger(), ReturnMessage = Messages.PasswordError };
             }
             HashingHelper.CreatePasswordHash(request.NewPassword, out passwordHash, out passwordSalt);
             user.PasswordHash = passwordHash;
@@ -60,7 +60,7 @@ namespace Business.Concrete
 
         public User UserExists(string email)
         {
-            var user = _userDal.FirstBy(p => p.Email == email);
+            var user = _userDal.FirstBy(p => p.Email == email && p.StatusId == UserStatus.Active.ToInteger());
             if (user == null) { return null; }
             return user;
         }
@@ -69,7 +69,7 @@ namespace Business.Concrete
         public Entities.Dto.Response.User.Login Login(Entities.Dto.Request.User.Login request)
         {
             var userCheck = UserExists(request.Email);
-            if (userCheck == null || userCheck.StatusId != UserStatus.Active.ToInteger())
+            if (userCheck == null)
             {
                 return new Entities.Dto.Response.User.Login { ReturnCode = Value.UserNotFound.ToInteger(), ReturnMessage = Messages.UserNotFound };
             }

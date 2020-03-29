@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Core.Extensions;
+using Core.Utilities.AllCode;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -30,7 +32,7 @@ namespace Business.Concrete
 
         public Entities.Dto.Response.Company.List GetCompany(Entities.Dto.Request.Company.Get request)
         {
-            var company = _companyDal.Get(filter: p => p.CompanyId == request.CompanyId);
+            var company = _companyDal.Get(filter: p => p.CompanyId == request.CompanyId && p.StatusId == Status.Active.ToInteger());
             if (company == null)
             {
                 return new Entities.Dto.Response.Company.List { ReturnCode = 10, ExceptionMessage = "Error" };

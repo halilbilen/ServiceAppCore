@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Entities.Concrete;
+using Core.Utilities.AllCode;
+using Core.Extensions;
 
 namespace DataAccess.Concrete
 {
@@ -12,7 +14,7 @@ namespace DataAccess.Concrete
     {
         public User GetById(int userId)
         {
-            return Get(filter: p => p.UserId == userId);
+            return Get(filter: p => p.UserId == userId && p.StatusId == UserStatus.Active.ToInteger());
         }
 
         public List<OperationClaim> GetClaims(User user)
