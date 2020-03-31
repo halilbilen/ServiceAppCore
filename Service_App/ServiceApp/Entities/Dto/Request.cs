@@ -48,6 +48,15 @@ namespace Entities.Dto.Request
             public string OldPassword { get; set; }
             public string NewPassword { get; set; }
         }
+
+        public class Edit : Common
+        {
+            public int UserId { get; set; }
+            public string CityCode { get; set; }
+            public string CountryCode { get; set; }
+            public int? AllowNotification { get; set; }
+            public int? AllowSms { get; set; }
+        }
     }
 
     public class Category : Common
@@ -57,6 +66,11 @@ namespace Entities.Dto.Request
             public string Name { get; set; }
             public string Description { get; set; }
             public IFormFile Media { get; set; }
+        }
+
+        public class Edit : Common
+        {
+            public int CategoryId { get; set; }
         }
     }
 
@@ -72,6 +86,16 @@ namespace Entities.Dto.Request
                 Page = 1;
             }
         }
+
+        public class Edit : Common
+        {
+            public int ServiceId { get; set; }
+        }
+
+        public class Search: Common
+        {
+            public string Word { get; set; }
+        }
     }
 
     public class CategoryMedia : Common
@@ -82,11 +106,21 @@ namespace Entities.Dto.Request
             public string Description { get; set; }
             public IFormFile Media { get; set; }
         }
+
+        public class Edit : Common
+        {
+            public int CategoryMediaId { get; set; }
+        }
     }
 
     public class Company : Common
     {
         public class Get : Common
+        {
+            public int CompanyId { get; set; }
+        }
+
+        public class Edit : Common
         {
             public int CompanyId { get; set; }
         }

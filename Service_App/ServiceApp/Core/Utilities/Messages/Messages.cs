@@ -34,5 +34,7 @@ namespace Core.Utilities.Messages
         public static string ServiceNotFound = "Service Bulunamadi";
 
         public static string Success = "Success";
+
+        public static string CompanyNotFound = "Sirket Bulunamadi";
     }
 }

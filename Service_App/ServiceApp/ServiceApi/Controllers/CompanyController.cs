@@ -31,7 +31,7 @@ namespace ServiceApi.Controllers
             request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
             request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
             var result = _companyService.GetCompany(request);
-            return Ok(new Response<Company.List> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
+            return Ok(new Response<Company.Get> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
         }
 
     }

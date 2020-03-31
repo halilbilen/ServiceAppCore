@@ -10,7 +10,6 @@ using System.Text;
 
 namespace Core.DataAccess.EntityFramework
 {
-    //[LogAspect()]
     public class EfBaseRepository<TEntity, TContext> : IEntityRepository<TEntity>
         where TEntity : class
         where TContext : DbContext, new()

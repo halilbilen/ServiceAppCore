@@ -16,5 +16,6 @@ namespace Business.Abstract
         Entities.Dto.Response.User.ForgotPassword ForgotPassword(Entities.Dto.Request.User.ForgotPassword request);
         Entities.Dto.Response.User.ChangePassword ChangePassword(Entities.Dto.Request.User.ChangePassword request);
         AccessToken CreateAccessToken(Entities.Concrete.User user);
+        Entities.Dto.Response.User.Edit Edit(Entities.Dto.Request.User.Edit request);
     }
 }

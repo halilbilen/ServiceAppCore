@@ -21,9 +21,25 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetAll(Entities.Dto.Request.Service.List? request)
+        public ActionResult Search(Entities.Dto.Request.Service.Search request)
+        {
+            if (request == null) { return BadRequest(); }
+            request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
+            request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
+            var result = _serviceService.Search(request);
+            return Ok(new Entities.Dto.Response.Response<Entities.Dto.Response.Service.Search> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetByCategoryId(Entities.Dto.Request.Service.List? request)
         {
             if (request.Page <= 0) { request.Page = 1; }
+
+            request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
+            request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
+
             var result = await _serviceService.GetByCategoryId(request);
             return Ok(new Entities.Dto.Response.Response<Entities.Dto.Response.Service.List> { ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage, Data = result });
         }

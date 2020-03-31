@@ -46,7 +46,7 @@ namespace Business.Concrete
             return new Entities.Dto.Response.User.ChangePassword { };
         }
 
-        public AccessToken CreateAccessToken(User user)
+        public AccessToken CreateAccessToken(Entities.Concrete.User user)
         {
             var claims = _userDal.GetClaims(user);
             var accessToken = _tokenHelper.CreateToken(user, claims);
@@ -58,26 +58,26 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        public User UserExists(string email)
+        public Entities.Concrete.User UserExists(string email)
         {
             var user = _userDal.FirstBy(p => p.Email == email && p.StatusId == UserStatus.Active.ToInteger());
             if (user == null) { return null; }
             return user;
         }
 
-        //[ValidationAspect(typeof(UserValidator), Priority = 2)]
+        [ValidationAspect(typeof(UserValidator), Priority = 2)]
         public Entities.Dto.Response.User.Login Login(Entities.Dto.Request.User.Login request)
         {
-            var userCheck = UserExists(request.Email);
-            if (userCheck == null)
+            var userExists = UserExists(request.Email);
+            if (userExists == null)
             {
                 return new Entities.Dto.Response.User.Login { ReturnCode = Value.UserNotFound.ToInteger(), ReturnMessage = Messages.UserNotFound };
             }
-            if (!HashingHelper.VerifyPasswordHash(request.Password, userCheck.PasswordHash, passwordSalt: userCheck.PasswordSalt))
+            if (!HashingHelper.VerifyPasswordHash(request.Password, userExists.PasswordHash, passwordSalt: userExists.PasswordSalt))
             {
                 return new Entities.Dto.Response.User.Login { ReturnCode = Value.InvalidPassword.ToInteger(), ReturnMessage = Messages.UserNotFound };
             }
-            var token = CreateAccessToken(userCheck);
+            var token = CreateAccessToken(userExists);
             return new Entities.Dto.Response.User.Login { Token = token.Token, ReturnCode = Value.Success.ToInteger(), ReturnMessage = Messages.SuccessLogin };
         }
 
@@ -104,6 +104,23 @@ namespace Business.Concrete
             var token = CreateAccessToken(user);
             _userDal.Add(user);
             return new Entities.Dto.Response.User.Register { Token = token.Token, ReturnCode = 200, ReturnMessage = Messages.UserRegistered };
+        }
+
+        public Entities.Dto.Response.User.Edit Edit(Entities.Dto.Request.User.Edit request)
+        {
+            var userExists = _userDal.GetById(request.UserId);
+            if (userExists == null)
+            {
+                return new Entities.Dto.Response.User.Edit { ReturnMessage = Messages.UserNotFound, ReturnCode = Value.UserNotFound.ToInteger() };
+            }
+            userExists.CityCode = request.CityCode;
+            userExists.CountryCode = request.CountryCode;
+            userExists.AllowNotification = request.AllowNotification;
+            userExists.AllowSms = request.AllowSms;
+            userExists.ModifiedUserId = request.UserId;
+            userExists.ModifiedDate = DateTime.Now;
+            _userDal.Update(userExists);
+            return new Entities.Dto.Response.User.Edit { UserId = userExists.UserId, ReturnCode = Value.Success.ToInteger(), ReturnMessage = Messages.Success };
         }
     }
 }

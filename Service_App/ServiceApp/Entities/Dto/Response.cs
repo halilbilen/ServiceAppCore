@@ -31,12 +31,6 @@ namespace Entities.Dto.Response
         }
     }
 
-    public class ServiceListModel : Paging
-    {
-        public IEnumerable<Entities.Concrete.Service> Services { get; set; }
-        public Paging PagingInfo { get; set; }
-    }
-
     public class Base
     {
         public int ReturnCode { get; set; }
@@ -54,10 +48,15 @@ namespace Entities.Dto.Response
 
     public class Company
     {
-        public class List : Base
+        public class Get : Base
         {
             public string Name { get; set; }
             public string CityCode { get; set; }
+        }
+
+        public class Edit : Base
+        {
+            public int CompanyId { get; set; }
         }
     }
 
@@ -82,13 +81,28 @@ namespace Entities.Dto.Response
         {
 
         }
+
+        public class Edit : Base
+        {
+            public int UserId { get; set; }
+        }
     }
 
     public class Service : Base
     {
-        public class List : ServiceListModel
+        public class List : Paging
         {
+            public IEnumerable<Entities.Concrete.Service> Services { get; set; }
+        }
 
+        public class Edit : Base
+        {
+            public int ServiceId { get; set; }
+        }
+
+        public class Search : Base
+        {
+            public IEnumerable<Entities.Concrete.Service> Services { get; set; }
         }
     }
 }
