@@ -14,7 +14,7 @@ namespace Entities.Concrete
             : base(options)
         {
         }
-
+        public virtual DbSet<Map.Category> Categories { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<CategoryMedia> CategoryMedia { get; set; }
         public virtual DbSet<City> City { get; set; }

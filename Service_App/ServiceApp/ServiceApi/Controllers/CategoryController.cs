@@ -1,83 +1,37 @@
-﻿using System;
+﻿using Business.Abstract;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Business.Abstract;
-using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ServiceApi.Controllers
 {
     [Produces("application/json")]
     [Route("[controller]/[action]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CategoryController : BaseController
     {
-        private ICategoryService categoryService;
-
-        public CategoryController(ICategoryService _categoryService)
+        private ICategoryService _categoryService;
+        public CategoryController(ICategoryService categoryService, IHttpContextAccessor accessor) : base(accessor)
         {
-            categoryService = _categoryService;
+            _accessor = accessor;
+            _categoryService = categoryService;
         }
 
-        [HttpGet]
-        public IActionResult GetList()
+        [HttpPost]
+        public IActionResult Get([FromBody]Entities.Dto.Request.Category.Get request)
         {
-            var result = categoryService.GetList();
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-            return BadRequest(result.Message);
+            if (request == null) { return BadRequest(); }
+            request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
+            request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
+
+            var result = _categoryService.Get(request);
+            return Ok(new Entities.Dto.Response.Response<Entities.Dto.Response.Category.Get> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
         }
 
-        [HttpGet]
-        public IActionResult GetById(int CategoryId)
-        {
-
-            var result = categoryService.GetById(CategoryId);
-            if (result.Success)
-            {
-                return Ok(result.Data);
-            }
-            return BadRequest(result.Message);
-        }
-
-        //[HttpPost]
-        //public IActionResult Add([FromForm]Entities.Dto.Request.Category.Create request)
-        //{
-        //    if (request == null) { return BadRequest(); }
-        //    var result = categoryService.Add(request);
-        //    if (result.Success)
-        //    {
-        //        return Ok(result.Message);
-        //    }
-        //    return BadRequest(result.Message);
-        //}
-
-        //[HttpPost]
-        //public IActionResult Update([FromBody]Category Category)
-        //{
-        //    if (Category == null) { return BadRequest(); }
-        //    var result = categoryService.Update(Category);
-        //    if (result.Success)
-        //    {
-        //        return Ok(result.Message);
-        //    }
-        //    return BadRequest(result.Message);
-        //}
-
-        //[HttpPost]
-        //public IActionResult Delete([FromBody]Category Category)
-        //{
-        //    if (Category == null) { return BadRequest(); }
-        //    var result = categoryService.Delete(Category);
-        //    if (result.Success)
-        //    {
-        //        return Ok(result.Message);
-        //    }
-        //    return BadRequest(result.Message);
-        //}
     }
 }
+

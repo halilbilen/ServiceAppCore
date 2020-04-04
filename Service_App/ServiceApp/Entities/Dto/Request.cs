@@ -72,6 +72,11 @@ namespace Entities.Dto.Request
         {
             public int CategoryId { get; set; }
         }
+
+        public class Get:Common
+        {
+            public int CategoryId { get; set; }
+        }
     }
 
     public class Service : Common
@@ -92,7 +97,7 @@ namespace Entities.Dto.Request
             public int ServiceId { get; set; }
         }
 
-        public class Search: Common
+        public class Search : Common
         {
             public string Word { get; set; }
         }
@@ -125,5 +130,4 @@ namespace Entities.Dto.Request
             public int CompanyId { get; set; }
         }
     }
-
 }

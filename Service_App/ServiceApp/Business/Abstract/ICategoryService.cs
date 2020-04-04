@@ -1,6 +1,5 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
-using Entities.Dto;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,5 +10,6 @@ namespace Business.Abstract
     {
         IDataResult<Category> GetById(int CategoryId);
         IDataResult<List<Category>> GetList();
+        Entities.Dto.Response.Category.Get Get(Entities.Dto.Request.Category.Get request);
     }
 }

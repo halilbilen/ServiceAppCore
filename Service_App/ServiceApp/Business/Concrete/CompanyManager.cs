@@ -45,13 +45,14 @@ namespace Business.Concrete
             return new Entities.Dto.Response.Company.Edit { CompanyId = company.CompanyId, ReturnCode = Value.Success.ToInteger(), ReturnMessage = Messages.Success };
         }
 
-        public Entities.Dto.Response.Company.Get GetCompany(Entities.Dto.Request.Company.Get request)
+        public Entities.Dto.Response.Company.Get GetByCompanyId(Entities.Dto.Request.Company.Get request)
         {
             var company = _companyDal.Get(filter: p => p.CompanyId == request.CompanyId && p.StatusId == Status.Active.ToInteger());
             if (company == null)
             {
                 return new Entities.Dto.Response.Company.Get { ReturnCode = Value.CompanyNotFound.ToInteger(), ReturnMessage = Messages.CompanyNotFound };
             }
+
             var data = new Entities.Dto.Response.Company.Get
             {
                 ReturnCode = Value.Success.ToInteger(),

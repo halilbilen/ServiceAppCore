@@ -16,10 +16,19 @@ namespace Core.DataAccess.EntityFramework
     {
         public TContext _context { get; set; } = new TContext();
 
-        public void Add(TEntity entity)
+        public bool Add(TEntity entity)
         {
-            _context.Set<TEntity>().Add(entity);
-            Save();
+            try
+            {
+                _context.Set<TEntity>().Add(entity);
+                Save();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
         }
 
         public void Delete(TEntity entity)

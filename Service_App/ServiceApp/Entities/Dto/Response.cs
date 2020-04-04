@@ -105,4 +105,14 @@ namespace Entities.Dto.Response
             public IEnumerable<Entities.Concrete.Service> Services { get; set; }
         }
     }
+
+    public class Category
+    {
+        public class Get : Base
+        {
+            public string Name { get; set; }
+            public string Description { get; set; }
+        }
+
+    }
 }

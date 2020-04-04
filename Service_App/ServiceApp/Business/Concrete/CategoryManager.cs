@@ -11,6 +11,8 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,18 +30,38 @@ namespace Business.Concrete
         {
             _categoryDal = categoryDal;
         }
-        //[ValidationAspect(typeof(CategoryValidator), Priority = 2)]
-        //[CacheRemoveAspect(_pattern: "IProductService.Get")]  Add islemine koy
-        public IDataResult<Category> GetById(int categoryId)
+
+        public Entities.Dto.Response.Category.Get Get(Entities.Dto.Request.Category.Get request)
         {
-            return new SuccessDataResult<Category>(_categoryDal.Get(filter: p => p.CategoryId == categoryId && p.StatusId == Status.Active.ToInteger()));
+            var category = _categoryDal.Get(p => p.CategoryId == request.CategoryId && p.StatusId == Status.Active.ToInteger());
+            if (category == null)
+            {
+                return new Entities.Dto.Response.Category.Get { ReturnCode = Value.CategoryNotFound.ToInteger(), ReturnMessage = Messages.CategoryNotFound };
+            }
+            var entity = _categoryDal.GetByCategoryId(request.CategoryId);
+
+            var result = new Entities.Dto.Response.Category.Get()
+            {
+                Name = entity.Name,
+                Description = entity.Description,
+                ReturnCode = Value.Success.ToInteger(),
+                ReturnMessage = Messages.Success
+            };
+            return result;
+        }
+
+        //[ValidationAspect(typeof(CategoryValidator), Priority = 2)]
+        //[CacheRemoveAspect(_pattern: "IProductService.Get")] Add islemine koy
+        public IDataResult<Entities.Concrete.Category> GetById(int categoryId)
+        {
+            return new SuccessDataResult<Entities.Concrete.Category>(_categoryDal.Get(filter: p => p.CategoryId == categoryId && p.StatusId == Status.Active.ToInteger()));
         }
 
         // [SecuredOperation("Product.List,Admin,User")]
         //[CacheAspect(_duration: 10)]
-        public IDataResult<List<Category>> GetList()
+        public IDataResult<List<Entities.Concrete.Category>> GetList()
         {
-            return new SuccessDataResult<List<Category>>(_categoryDal.GetAll(p => p.StatusId == Status.Active.ToInteger()).ToList());
+            return new SuccessDataResult<List<Entities.Concrete.Category>>(_categoryDal.GetAll(p => p.StatusId == Status.Active.ToInteger()).ToList());
         }
     }
 }

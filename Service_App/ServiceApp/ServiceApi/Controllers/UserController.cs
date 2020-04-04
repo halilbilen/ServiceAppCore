@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
-using Entities.Dto;
 using Entities.Dto.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +22,7 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(Entities.Dto.Request.User.Login request)
+        public ActionResult Login([FromBody]Entities.Dto.Request.User.Login request)
         {
             if (request == null) { return BadRequest(); }
 
@@ -37,7 +35,7 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(Entities.Dto.Request.User.Register request)
+        public ActionResult Register([FromBody]Entities.Dto.Request.User.Register request)
         {
             if (request == null) { return BadRequest(); }
 
@@ -51,7 +49,7 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangePassword(Entities.Dto.Request.User.ChangePassword request)
+        public ActionResult ChangePassword([FromBody]Entities.Dto.Request.User.ChangePassword request)
         {
             if (request == null) { return BadRequest(); }
 
@@ -65,7 +63,7 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Entities.Dto.Request.User.Edit request)
+        public ActionResult Edit([FromBody]Entities.Dto.Request.User.Edit request)
         {
             if (request == null) { return BadRequest(); }
 

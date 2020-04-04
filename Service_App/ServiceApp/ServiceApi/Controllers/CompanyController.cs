@@ -13,12 +13,11 @@ namespace ServiceApi.Controllers
     [Produces("application/json")]
     [Route("[controller]/[action]")]
     [ApiController]
-    public class CompanyController : ControllerBase
+    public class CompanyController : BaseController
     {
         private ICompanyService _companyService;
-        private IHttpContextAccessor _accessor;
 
-        public CompanyController(ICompanyService companyService, IHttpContextAccessor accessor)
+        public CompanyController(ICompanyService companyService, IHttpContextAccessor accessor) : base(accessor)
         {
             _companyService = companyService;
             _accessor = accessor;
@@ -27,10 +26,11 @@ namespace ServiceApi.Controllers
         [HttpPost]
         public IActionResult Get([FromBody]Entities.Dto.Request.Company.Get request)
         {
+            if (request == null) { return BadRequest(); }
             request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
             request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
-            var result = _companyService.GetCompany(request);
+            var result = _companyService.GetByCompanyId(request);
             return Ok(new Response<Company.Get> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
         }
 

@@ -21,7 +21,7 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult Search(Entities.Dto.Request.Service.Search request)
+        public ActionResult Search([FromBody]Entities.Dto.Request.Service.Search request)
         {
             if (request == null) { return BadRequest(); }
             request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
@@ -32,7 +32,7 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetByCategoryId(Entities.Dto.Request.Service.List? request)
+        public async Task<IActionResult> GetByCategoryId([FromBody]Entities.Dto.Request.Service.List? request)
         {
             if (request.Page <= 0) { request.Page = 1; }
 
