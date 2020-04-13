@@ -25,7 +25,10 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfCompanyDal>().As<ICompanyDal>();
             builder.RegisterType<ServiceManager>().As<IServiceService>();
             builder.RegisterType<EfServiceDal>().As<IServiceDal>();
-
+            builder.RegisterType<CityManager>().As<ICityService>();
+            builder.RegisterType<EfCityDal>().As<ICityDal>();
+            builder.RegisterType<CountryManager>().As<ICountryService>();
+            builder.RegisterType<EfCountryDal>().As<ICountryDal>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();

@@ -1,18 +1,9 @@
 ﻿using Business.Abstract;
-using Business.ValidationRules.FluentValidation;
-using Core.Aspects.Autofac.Caching;
-using Core.Aspects.Autofac.Logging;
-using Core.Aspects.Autofac.Security;
-using Core.Aspects.Autofac.Validation;
 using Core.Extensions;
 using Core.Utilities.AllCode;
 using Core.Utilities.Messages;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +12,6 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    //[LogAspect()]
     public class CategoryManager : ICategoryService
     {
         private ICategoryDal _categoryDal;
@@ -33,13 +23,12 @@ namespace Business.Concrete
 
         public Entities.Dto.Response.Category.Get Get(Entities.Dto.Request.Category.Get request)
         {
-            var category = _categoryDal.Get(p => p.CategoryId == request.CategoryId && p.StatusId == Status.Active.ToInteger());
-            if (category == null)
+            //var category = _categoryDal.Get(p => p.CategoryId == request.CategoryId && p.StatusId == Status.Active.ToInteger());
+            var entity = _categoryDal.GetByCategoryId(request.CategoryId, request.StatusId);
+            if (entity == null)
             {
                 return new Entities.Dto.Response.Category.Get { ReturnCode = Value.CategoryNotFound.ToInteger(), ReturnMessage = Messages.CategoryNotFound };
             }
-            var entity = _categoryDal.GetByCategoryId(request.CategoryId);
-
             var result = new Entities.Dto.Response.Category.Get()
             {
                 Name = entity.Name,

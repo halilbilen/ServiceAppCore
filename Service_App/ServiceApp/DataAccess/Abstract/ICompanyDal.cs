@@ -8,5 +8,6 @@ namespace DataAccess.Abstract
 {
     public interface ICompanyDal : IEntityRepository<Company>
     {
+        List<Entities.Map.Company> GetByServiceId(int serviceId, int statusId);
     }
 }

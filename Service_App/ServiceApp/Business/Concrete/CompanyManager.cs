@@ -15,20 +15,12 @@ namespace Business.Concrete
     public class CompanyManager : ICompanyService
     {
         private ICompanyDal _companyDal;
+        private IServiceDal _serviceDal;
 
-        public CompanyManager(ICompanyDal companyDal)
+        public CompanyManager(ICompanyDal companyDal, IServiceDal serviceDal)
         {
             _companyDal = companyDal;
-        }
-
-        public IResult Add(Entities.Concrete.Company company)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IResult Delete(Entities.Concrete.Company company)
-        {
-            throw new NotImplementedException();
+            _serviceDal = serviceDal;
         }
 
         public Entities.Dto.Response.Company.Edit Edit(Entities.Dto.Request.Company.Edit request)
@@ -63,14 +55,24 @@ namespace Business.Concrete
             return data;
         }
 
-        public IDataResult<List<Entities.Concrete.Company>> GetList()
+        public Entities.Dto.Response.Company.List GetByServiceId(Entities.Dto.Request.Company.List request)
         {
-            throw new NotImplementedException();
-        }
+            var service = _serviceDal.Get(p => p.ServiceId == request.ServiceId && p.StatusId == Status.Active.ToInteger());
+            if (service == null) { return new Entities.Dto.Response.Company.List { ReturnCode = Value.ServiceNotFound.ToInteger(), ReturnMessage = Messages.ServiceNotFound }; }
 
-        public IResult Update(Entities.Concrete.Company company)
-        {
-            throw new NotImplementedException();
+            var entity = _companyDal.GetByServiceId(request.ServiceId, request.StatusId);
+            if (entity == null)
+            {
+                return new Entities.Dto.Response.Company.List { ReturnCode = Value.CompanyNotFound.ToInteger(), ReturnMessage = Messages.CompanyNotFound };
+            }
+            var result = new Entities.Dto.Response.Company.List()
+            {
+                Companies = entity,
+                ReturnCode = Value.Success.ToInteger(),
+                ReturnMessage = Messages.Success
+            };
+            return result;
+
         }
     }
 }

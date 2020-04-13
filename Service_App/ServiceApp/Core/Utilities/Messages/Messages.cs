@@ -36,5 +36,9 @@ namespace Core.Utilities.Messages
         public static string Success = "Success";
 
         public static string CompanyNotFound = "Sirket Bulunamadi";
+
+        public static string CityNotFound = "Sehir Bulunamadi";
+
+        public static string CountryNotFound = "Ulke Bulunamadi";
     }
 }

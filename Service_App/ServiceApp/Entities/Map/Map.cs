@@ -12,4 +12,26 @@ namespace Entities.Map
         public string Name { get; set; }
         public string Description { get; set; }
     }
+
+    public class City
+    {
+        [Key]
+        public int CityId { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Country
+    {
+        [Key]
+        public int CountryId { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Company
+    {
+        [Key]
+        public int CompanyId { get; set; }
+        public string Name { get; set; }
+        public string About { get; set; }
+    }
 }

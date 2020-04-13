@@ -8,6 +8,6 @@ namespace DataAccess.Abstract
 {
     public interface ICategoryDal : IEntityRepository<Category>
     {
-        Entities.Map.Category GetByCategoryId(int categoryId);
+        Entities.Map.Category GetByCategoryId(int categoryId, int statusId);
     }
 }

@@ -15,6 +15,9 @@ namespace Entities.Concrete
         {
         }
         public virtual DbSet<Map.Category> Categories { get; set; }
+        public virtual DbSet<Map.City> Cities { get; set; }
+        public virtual DbSet<Map.Country> Countries { get; set; }
+        public virtual DbSet<Map.Company> Companies { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<CategoryMedia> CategoryMedia { get; set; }
         public virtual DbSet<City> City { get; set; }

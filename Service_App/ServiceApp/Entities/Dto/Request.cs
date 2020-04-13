@@ -73,9 +73,10 @@ namespace Entities.Dto.Request
             public int CategoryId { get; set; }
         }
 
-        public class Get:Common
+        public class Get : Common
         {
             public int CategoryId { get; set; }
+            public int StatusId { get; set; }
         }
     }
 
@@ -128,6 +129,29 @@ namespace Entities.Dto.Request
         public class Edit : Common
         {
             public int CompanyId { get; set; }
+        }
+
+        public class List : Common
+        {
+            public int ServiceId { get; set; }
+            public int StatusId { get; set; }
+        }
+    }
+
+    public class City : Common
+    {
+        public class List : Common
+        {
+            public string CountryName { get; set; }
+            public int StatusId { get; set; }
+        }
+    }
+
+    public class Country : Common
+    {
+        public class List : Common
+        {
+            public int StatusId { get; set; }
         }
     }
 }

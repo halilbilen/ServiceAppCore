@@ -16,7 +16,9 @@ namespace Core.Utilities.AllCode
         ExistEmail = 1010,
         InvalidPassword = 1022,
         ServiceNotFound = 1023,
-        CompanyNotFound = 1024
+        CompanyNotFound = 1024,
+        CityNotFound = 1025,
+        CountryNotFound = 1026
     }
 
     public enum Status

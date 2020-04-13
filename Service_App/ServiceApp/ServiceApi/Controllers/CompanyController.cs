@@ -34,5 +34,16 @@ namespace ServiceApi.Controllers
             return Ok(new Response<Company.Get> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
         }
 
+        [HttpPost]
+        public IActionResult List([FromBody]Entities.Dto.Request.Company.List request)
+        {
+            if (request == null) { return BadRequest(); }
+            request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
+            request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
+            var result = _companyService.GetByServiceId(request);
+            return Ok(new Response<Company.List> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
+        }
+
     }
 }

@@ -58,6 +58,27 @@ namespace Entities.Dto.Response
         {
             public int CompanyId { get; set; }
         }
+
+        public class List : Base
+        {
+            public IEnumerable<Entities.Map.Company> Companies { get; set; }
+        }
+    }
+
+    public class City
+    {
+        public class List : Base
+        {
+            public IEnumerable<Entities.Map.City> Cities { get; set; }
+        }
+    }
+
+    public class Country
+    {
+        public class List : Base
+        {
+            public IEnumerable<Entities.Concrete.Country> Countries { get; set; }
+        }
     }
 
     public class User

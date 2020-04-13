@@ -6,8 +6,8 @@ using System.Text;
 
 namespace DataAccess.Abstract
 {
-    public interface ICityDal:IEntityRepository<City>
+    public interface ICityDal : IEntityRepository<City>
     {
-
+        List<Entities.Map.City> GetByCountryName(string countryName, int statusId);
     }
 }

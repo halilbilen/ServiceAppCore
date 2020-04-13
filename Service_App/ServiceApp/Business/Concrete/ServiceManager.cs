@@ -28,7 +28,7 @@ namespace Business.Concrete
 
         public async Task<Entities.Dto.Response.Service.List> GetByCategoryId(Entities.Dto.Request.Service.List request)
         {
-            int pageSize = 3;
+            int pageSize = 10;
             if (request.CategoryId <= 0)
             {
                 return new Entities.Dto.Response.Service.List { ReturnCode = Value.CategoryNotFound.ToInteger(), ReturnMessage = Messages.CategoryNotFound };

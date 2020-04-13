@@ -12,10 +12,8 @@ namespace DataAccess.Concrete
 {
     public class EfCategoryDal : EfBaseRepository<Entities.Concrete.Category, ServiceAppContext>, ICategoryDal
     {
-        public Entities.Map.Category GetByCategoryId(int categoryId)
+        public Entities.Map.Category GetByCategoryId(int categoryId, int statusId)
         {
-
-            int statusId = 1;
             object p0 = new MySqlParameter { ParameterName = "pCategoryId", MySqlDbType = MySqlDbType.Int32, Value = categoryId, Direction = System.Data.ParameterDirection.Input };
             object p1 = new MySqlParameter { ParameterName = "pStatusId", MySqlDbType = MySqlDbType.Int32, Value = statusId, Direction = System.Data.ParameterDirection.Input };
             object[] parameters = { p0, p1 };
