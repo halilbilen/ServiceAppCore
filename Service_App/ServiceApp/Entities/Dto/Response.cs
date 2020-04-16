@@ -129,6 +129,12 @@ namespace Entities.Dto.Response
 
     public class Category
     {
+        public class Create : Base
+        {
+            public string Name { get; set; }
+            public string Description { get; set; }
+        }
+
         public class Get : Base
         {
             public string Name { get; set; }

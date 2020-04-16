@@ -18,7 +18,10 @@ namespace Core.Utilities.AllCode
         ServiceNotFound = 1023,
         CompanyNotFound = 1024,
         CityNotFound = 1025,
-        CountryNotFound = 1026
+        CountryNotFound = 1026,
+        CategoryNameNotNull = 1027,
+        CategoryDescriptionNotNull = 1028,
+        CategoryExist = 1029
     }
 
     public enum Status

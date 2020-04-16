@@ -22,6 +22,24 @@ namespace Business.Concrete
             _categoryDal = categoryDal;
         }
 
+        public Entities.Dto.Response.Category.Create Add(Entities.Dto.Request.Category.Create request)
+        {
+            if (request.Name == null) { return new Entities.Dto.Response.Category.Create { ReturnCode = Value.CategoryNameNotNull.ToInteger(), ReturnMessage = Messages.CategoryNameNotNull }; }
+            if (request.Description == null) { return new Entities.Dto.Response.Category.Create { ReturnCode = Value.CategoryDescriptionNotNull.ToInteger(), ReturnMessage = Messages.CategoryDescriptionNotNull }; }
+            var entity = _categoryDal.FirstByAsNoTracking(p => p.Name == request.Name);
+            if (entity != null) { return new Entities.Dto.Response.Category.Create { ReturnCode = Value.CategoryExist.ToInteger(), ReturnMessage = Messages.ExistsCategory }; }
+            var category = new Entities.Concrete.Category()
+            {
+                Name = request.Name,
+                Description = request.Description,
+                CreatedUserId = 1,
+                CreatedDate = DateTime.Now,
+                StatusId = 1
+            };
+            _categoryDal.Add(category);
+            return new Entities.Dto.Response.Category.Create { Name = request.Name, Description = request.Description, ReturnCode = Value.Success.ToInteger(), ReturnMessage = Messages.Success };
+        }
+
         public Entities.Dto.Response.Category.Get Get(Entities.Dto.Request.Category.Get request)
         {
             //var category = _categoryDal.Get(p => p.CategoryId == request.CategoryId && p.StatusId == Status.Active.ToInteger());
@@ -40,13 +58,9 @@ namespace Business.Concrete
             return result;
         }
 
+        // [SecuredOperation("Product.List,Admin,User")]
         //[ValidationAspect(typeof(CategoryValidator), Priority = 2)]
         //[CacheRemoveAspect(_pattern: "IProductService.Get")] Add islemine koy
-        public IDataResult<Entities.Concrete.Category> GetById(int categoryId)
-        {
-            return new SuccessDataResult<Entities.Concrete.Category>(_categoryDal.Get(filter: p => p.CategoryId == categoryId && p.StatusId == Status.Active.ToInteger()));
-        }
-
         [CacheAspect(_duration: 10)]
         public Entities.Dto.Response.Category.List GetList(Entities.Dto.Request.Category.List request)
         {
@@ -60,8 +74,5 @@ namespace Business.Concrete
             };
             return entity;
         }
-
-        // [SecuredOperation("Product.List,Admin,User")]
-       // [CacheAspect(_duration: 10)]
     }
 }

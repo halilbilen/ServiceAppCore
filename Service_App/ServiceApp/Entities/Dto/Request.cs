@@ -65,7 +65,6 @@ namespace Entities.Dto.Request
         {
             public string Name { get; set; }
             public string Description { get; set; }
-            public IFormFile Media { get; set; }
         }
 
         public class Edit : Common

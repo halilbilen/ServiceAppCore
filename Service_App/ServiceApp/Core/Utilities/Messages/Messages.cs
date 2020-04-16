@@ -40,5 +40,9 @@ namespace Core.Utilities.Messages
         public static string CityNotFound = "Sehir Bulunamadi";
 
         public static string CountryNotFound = "Ulke Bulunamadi";
+
+        public static string CategoryNameNotNull = "Kategori ismi bos olamaz.";
+
+        public static string CategoryDescriptionNotNull = "Kategori aciklamasi bos olamaz.";
     }
 }
