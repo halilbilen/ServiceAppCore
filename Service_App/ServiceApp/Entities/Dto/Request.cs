@@ -78,6 +78,11 @@ namespace Entities.Dto.Request
             public int CategoryId { get; set; }
             public int StatusId { get; set; }
         }
+
+        public class List : Common
+        {
+            public int StatusId { get; set; }
+        }
     }
 
     public class Service : Common

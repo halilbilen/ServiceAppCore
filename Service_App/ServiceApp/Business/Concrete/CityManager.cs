@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Aspects.Autofac.Caching;
 using Core.Extensions;
 using Core.Utilities.AllCode;
 using Core.Utilities.Messages;
@@ -18,6 +19,7 @@ namespace Business.Concrete
             _cityDal = cityDal;
         }
 
+        [CacheAspect]
         public Entities.Dto.Response.City.List GetByCountryName(Entities.Dto.Request.City.List request)
         {
             if (request.CountryName == null) { return new Entities.Dto.Response.City.List { ReturnCode = Value.CountryNotFound.ToInteger(), ReturnMessage = Messages.CountryNotFound }; }

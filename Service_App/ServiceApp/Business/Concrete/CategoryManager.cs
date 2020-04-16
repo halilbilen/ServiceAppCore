@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Aspects.Autofac.Caching;
 using Core.Extensions;
 using Core.Utilities.AllCode;
 using Core.Utilities.Messages;
@@ -46,11 +47,21 @@ namespace Business.Concrete
             return new SuccessDataResult<Entities.Concrete.Category>(_categoryDal.Get(filter: p => p.CategoryId == categoryId && p.StatusId == Status.Active.ToInteger()));
         }
 
-        // [SecuredOperation("Product.List,Admin,User")]
-        //[CacheAspect(_duration: 10)]
-        public IDataResult<List<Entities.Concrete.Category>> GetList()
+        [CacheAspect(_duration: 10)]
+        public Entities.Dto.Response.Category.List GetList(Entities.Dto.Request.Category.List request)
         {
-            return new SuccessDataResult<List<Entities.Concrete.Category>>(_categoryDal.GetAll(p => p.StatusId == Status.Active.ToInteger()).ToList());
+            if (request.StatusId < 0) { request.StatusId = 1; }
+            var categories = _categoryDal.GetAll(p => p.StatusId == request.StatusId);
+            var entity = new Entities.Dto.Response.Category.List()
+            {
+                Categories = categories,
+                ReturnCode = Value.Success.ToInteger(),
+                ReturnMessage = Messages.Success
+            };
+            return entity;
         }
+
+        // [SecuredOperation("Product.List,Admin,User")]
+       // [CacheAspect(_duration: 10)]
     }
 }

@@ -135,5 +135,9 @@ namespace Entities.Dto.Response
             public string Description { get; set; }
         }
 
+        public class List : Base
+        {
+            public IEnumerable<Entities.Concrete.Category> Categories { get; set; }
+        }
     }
 }

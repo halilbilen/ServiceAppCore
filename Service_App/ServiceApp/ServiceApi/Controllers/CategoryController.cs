@@ -32,6 +32,17 @@ namespace ServiceApi.Controllers
             return Ok(new Entities.Dto.Response.Response<Entities.Dto.Response.Category.Get> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
         }
 
+        [HttpPost]
+        public IActionResult List([FromBody] Entities.Dto.Request.Category.List request)
+        {
+            if (request == null) { return BadRequest(); }
+            request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
+            request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
+            var result = _categoryService.GetList(request);
+            return Ok(new Entities.Dto.Response.Response<Entities.Dto.Response.Category.List> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
+        }
+
     }
 }
 

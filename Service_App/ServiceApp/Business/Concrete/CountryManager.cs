@@ -1,8 +1,10 @@
 ﻿using Business.Abstract;
+using Core.Aspects.Autofac.Caching;
 using Core.Extensions;
 using Core.Utilities.AllCode;
 using Core.Utilities.Messages;
 using DataAccess.Abstract;
+using Entities.Dto.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,7 @@ namespace Business.Concrete
             _countryDal = CountryDal;
         }
 
+        [CacheAspect]
         public Entities.Dto.Response.Country.List GetAll(Entities.Dto.Request.Country.List request)
         {
             if (request.StatusId <= 0) { request.StatusId = 1; }

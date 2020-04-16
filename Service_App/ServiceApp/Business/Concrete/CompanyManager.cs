@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Aspects.Autofac.Caching;
 using Core.Extensions;
 using Core.Utilities.AllCode;
 using Core.Utilities.Messages;
@@ -55,6 +56,7 @@ namespace Business.Concrete
             return data;
         }
 
+        [CacheAspect]
         public Entities.Dto.Response.Company.List GetByServiceId(Entities.Dto.Request.Company.List request)
         {
             var service = _serviceDal.Get(p => p.ServiceId == request.ServiceId && p.StatusId == Status.Active.ToInteger());

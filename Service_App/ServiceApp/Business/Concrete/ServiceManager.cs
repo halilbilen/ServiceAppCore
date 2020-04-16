@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Aspects.Autofac.Caching;
 using Core.Extensions;
 using Core.Utilities.AllCode;
 using Core.Utilities.Messages;
@@ -26,6 +27,7 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
+        [CacheAspect]
         public async Task<Entities.Dto.Response.Service.List> GetByCategoryId(Entities.Dto.Request.Service.List request)
         {
             int pageSize = 10;
