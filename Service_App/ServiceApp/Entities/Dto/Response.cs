@@ -48,6 +48,11 @@ namespace Entities.Dto.Response
 
     public class Company
     {
+        public class Create : Base
+        {
+
+        }
+
         public class Get : Base
         {
             public string Name { get; set; }

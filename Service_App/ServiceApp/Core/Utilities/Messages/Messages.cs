@@ -21,11 +21,7 @@ namespace Core.Utilities.Messages
 
         public static string AccessTokenCreated = "Access Token Olusturuldu";
         public static string AuthorizationDenied = "Yetki yok";
-        public static string CategoryAdded = "Category Eklendi";
-        public static string CategoryDeleted = "Category Silindi";
-        public static string CategoryUpdated = "Category Eklendi";
-        public static string CategoryNotFound = "Category Bulunamadi";
-        public static string ExistsCategory = "Mevcut Category";
+
 
         public static string NotMail = "Mail Degil";
 
@@ -35,14 +31,27 @@ namespace Core.Utilities.Messages
 
         public static string Success = "Success";
 
-        public static string CompanyNotFound = "Sirket Bulunamadi";
 
         public static string CityNotFound = "Sehir Bulunamadi";
-
         public static string CountryNotFound = "Ulke Bulunamadi";
 
-        public static string CategoryNameNotNull = "Kategori ismi bos olamaz.";
 
+        public static string CategoryAdded = "Category Eklendi";
+        public static string CategoryDeleted = "Category Silindi";
+        public static string CategoryUpdated = "Category Eklendi";
+        public static string CategoryNotFound = "Category Bulunamadi";
+        public static string CategoryExists = " Category Mevcut";
+        public static string CategoryNameNotNull = "Kategori ismi bos olamaz.";
         public static string CategoryDescriptionNotNull = "Kategori aciklamasi bos olamaz.";
+
+        public static string CompanyNotFound = "Sirket Bulunamadi";
+        public static string CompanyNameNotNull = "Sirket ismi bos olamaz.";
+        public static string CompanyExist = "Sirket Mevcut ";
+        public static string CompanyEmailNotNull = "Sirket email bos olamaz.";
+        public static string CompanyPhoneNotNull = "Sirket telefonu bos olamaz.";
+
+        public static string CompanyNotUser = "Kullanici degil";
+        public static string CompanyAdded = "Sirket eklendi";
     }
 }
+

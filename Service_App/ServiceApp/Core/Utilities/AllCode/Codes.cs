@@ -21,7 +21,14 @@ namespace Core.Utilities.AllCode
         CountryNotFound = 1026,
         CategoryNameNotNull = 1027,
         CategoryDescriptionNotNull = 1028,
-        CategoryExist = 1029
+        CategoryExist = 1029,
+        CompanyNameNotNull = 1030,
+        CompanyExist = 1031,
+        CompanyEmailNotNull = 1032,
+        CompanyPhoneNotNull = 1033,
+        CategoryAdded = 1034,
+        CompanyNotUser = 1035,
+        CompanyAdded = 1036
     }
 
     public enum Status

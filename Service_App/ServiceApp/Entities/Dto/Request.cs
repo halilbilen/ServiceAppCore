@@ -125,6 +125,19 @@ namespace Entities.Dto.Request
 
     public class Company : Common
     {
+        public class Create : Common
+        {
+            public int UserId { get; set; }
+            public string Name { get; set; }
+            public int TypeId { get; set; }//Kurumsal - Bireysel
+            public int WorkTime { get; set; }//Uzun Vadeli - Anlık
+            public string CityCode { get; set; }
+            public string CountryCode { get; set; }
+            public string GsmNo { get; set; }
+            public string Email { get; set; }
+            public string About { get; set; }
+        }
+
         public class Get : Common
         {
             public int CompanyId { get; set; }
@@ -133,6 +146,12 @@ namespace Entities.Dto.Request
         public class Edit : Common
         {
             public int CompanyId { get; set; }
+            public int WorkTime { get; set; }
+            public string CityCode { get; set; }
+            public string CountryCode { get; set; }
+            public string GsmNo { get; set; }
+            public string Email { get; set; }
+            public string About { get; set; }
         }
 
         public class List : Common

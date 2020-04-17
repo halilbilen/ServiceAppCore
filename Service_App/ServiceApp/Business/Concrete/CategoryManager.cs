@@ -27,7 +27,7 @@ namespace Business.Concrete
             if (request.Name == null) { return new Entities.Dto.Response.Category.Create { ReturnCode = Value.CategoryNameNotNull.ToInteger(), ReturnMessage = Messages.CategoryNameNotNull }; }
             if (request.Description == null) { return new Entities.Dto.Response.Category.Create { ReturnCode = Value.CategoryDescriptionNotNull.ToInteger(), ReturnMessage = Messages.CategoryDescriptionNotNull }; }
             var entity = _categoryDal.FirstByAsNoTracking(p => p.Name == request.Name);
-            if (entity != null) { return new Entities.Dto.Response.Category.Create { ReturnCode = Value.CategoryExist.ToInteger(), ReturnMessage = Messages.ExistsCategory }; }
+            if (entity != null) { return new Entities.Dto.Response.Category.Create { ReturnCode = Value.CategoryExist.ToInteger(), ReturnMessage = Messages.CategoryExists }; }
             var category = new Entities.Concrete.Category()
             {
                 Name = request.Name,
@@ -37,7 +37,7 @@ namespace Business.Concrete
                 StatusId = 1
             };
             _categoryDal.Add(category);
-            return new Entities.Dto.Response.Category.Create { Name = request.Name, Description = request.Description, ReturnCode = Value.Success.ToInteger(), ReturnMessage = Messages.Success };
+            return new Entities.Dto.Response.Category.Create { Name = request.Name, Description = request.Description, ReturnCode = Value.CategoryAdded.ToInteger(), ReturnMessage = Messages.CategoryAdded };
         }
 
         public Entities.Dto.Response.Category.Get Get(Entities.Dto.Request.Category.Get request)
