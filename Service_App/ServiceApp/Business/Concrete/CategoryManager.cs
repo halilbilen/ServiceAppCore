@@ -61,7 +61,7 @@ namespace Business.Concrete
         // [SecuredOperation("Product.List,Admin,User")]
         //[ValidationAspect(typeof(CategoryValidator), Priority = 2)]
         //[CacheRemoveAspect(_pattern: "IProductService.Get")] Add islemine koy
-        [CacheAspect(_duration: 10)]
+        //[CacheAspect(_duration: 10)]
         public Entities.Dto.Response.Category.List GetList(Entities.Dto.Request.Category.List request)
         {
             if (request.StatusId < 0) { request.StatusId = 1; }
@@ -73,6 +73,11 @@ namespace Business.Concrete
                 ReturnMessage = Messages.Success
             };
             return entity;
+        }
+
+        public List<Entities.Concrete.Category> GetApi()
+        {
+            return _categoryDal.GetList().ToList();
         }
     }
 }

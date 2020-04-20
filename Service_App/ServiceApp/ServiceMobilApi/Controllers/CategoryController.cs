@@ -54,6 +54,12 @@ namespace ServiceApi.Controllers
             return Ok(new Entities.Dto.Response.Response<Entities.Dto.Response.Category.List> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
         }
 
+        [HttpGet]
+        public IActionResult GetApi()
+        {
+            return Ok(_categoryService.GetApi());
+        }
+
     }
 }
 
