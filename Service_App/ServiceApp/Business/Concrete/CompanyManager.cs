@@ -105,7 +105,6 @@ namespace Business.Concrete
                 ReturnMessage = Messages.Success
             };
             return result;
-
         }
     }
 }

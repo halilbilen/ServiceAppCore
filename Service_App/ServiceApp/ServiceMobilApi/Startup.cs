@@ -64,6 +64,7 @@ namespace ServiceMobilApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        [Obsolete]
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -80,7 +81,7 @@ namespace ServiceMobilApi
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "ServiceApp API V1");
             });
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseAuthentication();//Giris Yapma

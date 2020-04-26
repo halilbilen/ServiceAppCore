@@ -12,7 +12,7 @@ namespace ServiceApi.Controllers
     [ApiController]
     public class ServiceController : BaseController
     {
-        private IServiceService _serviceService;
+        private readonly IServiceService _serviceService;
 
         public ServiceController(IServiceService serviceService, IHttpContextAccessor accessor) : base(accessor)
         {
@@ -32,8 +32,9 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetByCategoryId([FromBody]Entities.Dto.Request.Service.List? request)
+        public async Task<IActionResult> GetByCategoryId([FromBody]Entities.Dto.Request.Service.List request)
         {
+            if (request == null) { return BadRequest(); }
             if (request.Page <= 0) { request.Page = 1; }
 
             request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();

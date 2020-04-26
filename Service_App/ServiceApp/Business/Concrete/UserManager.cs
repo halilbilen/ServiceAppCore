@@ -49,8 +49,7 @@ namespace Business.Concrete
         public AccessToken CreateAccessToken(Entities.Concrete.User user)
         {
             var claims = _userDal.GetClaims(user);
-            var accessToken = _tokenHelper.CreateToken(user, claims);
-            return accessToken;
+            return _tokenHelper.CreateToken(user, claims);
         }
 
         public Entities.Dto.Response.User.ForgotPassword ForgotPassword(Entities.Dto.Request.User.ForgotPassword request)
@@ -60,9 +59,7 @@ namespace Business.Concrete
 
         public Entities.Concrete.User UserExists(string email)
         {
-            var user = _userDal.FirstBy(p => p.Email == email && p.StatusId == UserStatus.Active.ToInteger());
-            if (user == null) { return null; }
-            return user;
+            return _userDal.FirstBy(p => p.Email == email && p.StatusId == UserStatus.Active.ToInteger());
         }
 
         [ValidationAspect(typeof(UserValidator), Priority = 2)]
@@ -75,7 +72,7 @@ namespace Business.Concrete
             }
             if (!HashingHelper.VerifyPasswordHash(request.Password, userExists.PasswordHash, passwordSalt: userExists.PasswordSalt))
             {
-                return new Entities.Dto.Response.User.Login { ReturnCode = Value.InvalidPassword.ToInteger(), ReturnMessage = Messages.UserNotFound };
+                return new Entities.Dto.Response.User.Login { ReturnCode = Value.InvalidPassword.ToInteger(), ReturnMessage = Messages.PasswordError };
             }
             var token = CreateAccessToken(userExists);
             return new Entities.Dto.Response.User.Login { Token = token.Token, ReturnCode = Value.Success.ToInteger(), ReturnMessage = Messages.SuccessLogin };

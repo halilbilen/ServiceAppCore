@@ -11,13 +11,12 @@ namespace Core.DataAccess
         T Get(Expression<Func<T, bool>> filter);
         IList<T> GetList(Expression<Func<T, bool>> filter = null);
         IQueryable<T> GetAll(Expression<Func<T, bool>> filter = null);
-        bool Add(T entity);
+        void Add(T entity);
         void Update(T entity);
         void Delete(T entity);
         IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate);
         IEnumerable<T> FindByAsNoTracking(Expression<Func<T, bool>> predicate);
         T FirstBy(Expression<Func<T, bool>> predicate);
         T FirstByAsNoTracking(Expression<Func<T, bool>> predicate);
-        void Save();
     }
 }

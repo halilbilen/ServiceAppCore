@@ -15,7 +15,7 @@ namespace Business.Concrete
 {
     public class CategoryManager : ICategoryService
     {
-        private ICategoryDal _categoryDal;
+        private readonly ICategoryDal _categoryDal;
 
         public CategoryManager(ICategoryDal categoryDal)
         {
@@ -65,7 +65,11 @@ namespace Business.Concrete
         public Entities.Dto.Response.Category.List GetList(Entities.Dto.Request.Category.List request)
         {
             if (request.StatusId < 0) { request.StatusId = 1; }
-            var categories = _categoryDal.GetAll(p => p.StatusId == request.StatusId);
+            var categories = _categoryDal.GetList(p => p.StatusId == request.StatusId);
+            if (categories == null)
+            {
+                return new Entities.Dto.Response.Category.List { ReturnCode = 400, ReturnMessage = Messages.CategoryExists };
+            }
             var entity = new Entities.Dto.Response.Category.List()
             {
                 Categories = categories,
@@ -73,11 +77,6 @@ namespace Business.Concrete
                 ReturnMessage = Messages.Success
             };
             return entity;
-        }
-
-        public List<Entities.Concrete.Category> GetApi()
-        {
-            return _categoryDal.GetList().ToList();
         }
     }
 }

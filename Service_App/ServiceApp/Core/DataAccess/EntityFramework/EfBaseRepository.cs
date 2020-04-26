@@ -16,78 +16,97 @@ namespace Core.DataAccess.EntityFramework
     {
         public TContext _context { get; set; } = new TContext();
 
-        public bool Add(TEntity entity)
+        public void Add(TEntity entity)
         {
-            try
+            using (var context = new TContext())
             {
-                _context.Set<TEntity>().Add(entity);
-                Save();
-                return true;
+                context.Set<TEntity>().Add(entity);
+                Save(context);
             }
-            catch (Exception)
-            {
-                return false;
-            }
-
         }
 
         public void Delete(TEntity entity)
         {
-            _context.Set<TEntity>().Remove(entity);
-            Save();
+            using (var context = new TContext())
+            {
+                context.Set<TEntity>().Remove(entity);
+                Save(context);
+            }
         }
 
         public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
-            return _context.Set<TEntity>().SingleOrDefault(filter);
+            using (var context = new TContext())
+            {
+                return context.Set<TEntity>().SingleOrDefault(filter);
+            }
         }
 
         public IList<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
         {
-
-            return filter == null ? _context.Set<TEntity>().ToList()
-                : _context.Set<TEntity>().Where(filter).ToList();
-
+            using (var context = new TContext())
+            {
+                return filter == null ? context.Set<TEntity>().ToList()
+                : context.Set<TEntity>().Where(filter).ToList();
+            }
         }
 
         public void Update(TEntity entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
-            Save();
+            using (var context = new TContext())
+            {
+                context.Entry(entity).State = EntityState.Modified;
+                Save(context);
+            }
         }
 
-        public void Save()
+        public void Save(TContext context)
         {
-            _context.SaveChanges();
+            context.SaveChanges();
         }
 
         public IEnumerable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
         {
-            IEnumerable<TEntity> query = _context.Set<TEntity>().Where(predicate);
-            return query;
+            using (var context = new TContext())
+            {
+                IEnumerable<TEntity> query = context.Set<TEntity>().Where(predicate);
+                return query;
+            }
         }
 
         public IEnumerable<TEntity> FindByAsNoTracking(Expression<Func<TEntity, bool>> predicate)
         {
-            IEnumerable<TEntity> query = _context.Set<TEntity>().AsNoTracking().Where(predicate);
-            return query;
+            using (var context = new TContext())
+            {
+                IEnumerable<TEntity> query = context.Set<TEntity>().AsNoTracking().Where(predicate);
+                return query;
+            }
         }
 
         public TEntity FirstBy(Expression<Func<TEntity, bool>> predicate)
         {
-            var query = _context.Set<TEntity>().FirstOrDefault(predicate);
-            return query;
+            using (var context = new TContext())
+            {
+                var query = context.Set<TEntity>().FirstOrDefault(predicate);
+                return query;
+            }
         }
 
         public TEntity FirstByAsNoTracking(Expression<Func<TEntity, bool>> predicate)
         {
-            var query = _context.Set<TEntity>().AsNoTracking().FirstOrDefault(predicate);
-            return query;
+            using (var context = new TContext())
+            {
+                var query = context.Set<TEntity>().AsNoTracking().FirstOrDefault(predicate);
+                return query;
+            }
         }
 
         public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
-            return filter == null ? _context.Set<TEntity>() : _context.Set<TEntity>().Where(filter);
+            using (var context = new TContext())
+            {
+                return filter == null ? context.Set<TEntity>() : context.Set<TEntity>().Where(filter);
+            }
         }
     }
 }
