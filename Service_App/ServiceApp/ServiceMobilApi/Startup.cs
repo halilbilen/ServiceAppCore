@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-namespace ServiceMobilApi
+namespace ServiceMobileApi
 {
     public class Startup
     {

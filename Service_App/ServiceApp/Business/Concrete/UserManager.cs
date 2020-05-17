@@ -37,6 +37,7 @@ namespace Business.Concrete
             {
                 return new Entities.Dto.Response.User.ChangePassword { ReturnCode = Value.InvalidPassword.ToInteger(), ReturnMessage = Messages.PasswordError };
             }
+
             HashingHelper.CreatePasswordHash(request.NewPassword, out passwordHash, out passwordSalt);
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
@@ -54,12 +55,13 @@ namespace Business.Concrete
 
         public Entities.Dto.Response.User.ForgotPassword ForgotPassword(Entities.Dto.Request.User.ForgotPassword request)
         {
+            /* */
             throw new NotImplementedException();
         }
 
         public Entities.Concrete.User UserExists(string email)
         {
-            return _userDal.FirstBy(p => p.Email == email && p.StatusId == UserStatus.Active.ToInteger());
+            return _userDal.FirstBy(p => p.Email == email);
         }
 
         [ValidationAspect(typeof(UserValidator), Priority = 2)]
@@ -86,7 +88,6 @@ namespace Business.Concrete
             {
                 return new Entities.Dto.Response.User.Register { ReturnCode = Value.ExistEmail.ToInteger(), ReturnMessage = Messages.UserAlreadyExists };
             }
-
 
             HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
             var user = new Entities.Concrete.User

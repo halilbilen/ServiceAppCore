@@ -8,7 +8,6 @@ namespace Core.Utilities.Messages
     public static class Messages
     {
         public static string WrongValidationType = "Wrong Validation type";
-
         public static string WrongLoggerType = "Wrong Logger type";
 
         public static string UserNotFound = "Kullanıcı Bulunamadi";
@@ -17,14 +16,10 @@ namespace Core.Utilities.Messages
         public static string UserAlreadyExists = "Kullanci Mevcut";
         public static string NameNotEmpty = "isim bos olamaz";
         public static string MailNotEmpty = "E-mail bos olamaz";
-        public static string UserRegistered = "Kullanici Basarili Kayit";
-
+        public static string UserRegistered = "Kullanici  Kayit Basarili";
         public static string AccessTokenCreated = "Access Token Olusturuldu";
         public static string AuthorizationDenied = "Yetki yok";
-
-
         public static string NotMail = "Mail Degil";
-
         public static string PasswordLenght = "Password 6-100 uzunlugunda olmali";
 
         public static string ServiceNotFound = "Service Bulunamadi";
@@ -49,7 +44,6 @@ namespace Core.Utilities.Messages
         public static string CompanyExist = "Sirket Mevcut ";
         public static string CompanyEmailNotNull = "Sirket email bos olamaz.";
         public static string CompanyPhoneNotNull = "Sirket telefonu bos olamaz.";
-
         public static string CompanyNotUser = "Kullanici degil";
         public static string CompanyAdded = "Sirket eklendi";
     }

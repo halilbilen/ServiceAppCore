@@ -34,7 +34,7 @@ namespace Entities.Dto.Response
     public class Base
     {
         public int ReturnCode { get; set; }
-        public string CultureInfo { get; set; }
+        //public string CultureInfo { get; set; }
         public string ReturnMessage { get; set; }
         [NotMapped]
         public bool Success => ReturnCode.Equals(200);
@@ -42,7 +42,7 @@ namespace Entities.Dto.Response
         public Base()
         {
             ExceptionMessage = string.Empty;
-            CultureInfo = string.Empty;
+            //CultureInfo = string.Empty;
         }
     }
 

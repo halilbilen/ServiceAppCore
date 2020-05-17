@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{693771D5-A4A1-4FB5-8B5A-281C5AA48A23}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceMobilApi", "ServiceMobilApi\ServiceMobilApi.csproj", "{C1BFA362-D2DF-4DED-9DCF-15CBDF3A0A80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceMobileApi", "ServiceMobilApi\ServiceMobileApi.csproj", "{C1BFA362-D2DF-4DED-9DCF-15CBDF3A0A80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
