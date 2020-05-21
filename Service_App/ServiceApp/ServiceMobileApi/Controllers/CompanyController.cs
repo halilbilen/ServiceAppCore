@@ -46,7 +46,7 @@ namespace ServiceApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult List([FromBody]Entities.Dto.Request.Company.List request)
+        public IActionResult GetByServiceId([FromBody]Entities.Dto.Request.Company.List request)
         {
             if (request == null) { return BadRequest(); }
             request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();

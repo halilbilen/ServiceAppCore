@@ -54,8 +54,6 @@ namespace Entities.Dto.Request
             public int UserId { get; set; }
             public string CityCode { get; set; }
             public string CountryCode { get; set; }
-            public int? AllowNotification { get; set; }
-            public int? AllowSms { get; set; }
         }
     }
 

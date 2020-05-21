@@ -113,8 +113,6 @@ namespace Business.Concrete
             }
             userExists.CityCode = request.CityCode;
             userExists.CountryCode = request.CountryCode;
-            userExists.AllowNotification = request.AllowNotification;
-            userExists.AllowSms = request.AllowSms;
             userExists.ModifiedUserId = request.UserId;
             userExists.ModifiedDate = DateTime.Now;
             _userDal.Update(userExists);

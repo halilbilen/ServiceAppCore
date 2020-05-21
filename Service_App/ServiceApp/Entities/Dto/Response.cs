@@ -148,7 +148,7 @@ namespace Entities.Dto.Response
 
         public class List : Base
         {
-            public IEnumerable<Entities.Concrete.Category> Categories { get; set; }
+            public IEnumerable<Entities.Map.Category> Categories { get; set; }
         }
     }
 }

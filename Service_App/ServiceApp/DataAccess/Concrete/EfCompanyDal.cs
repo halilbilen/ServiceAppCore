@@ -17,7 +17,7 @@ namespace DataAccess.Concrete
             object p0 = new MySqlParameter { ParameterName = "pServiceId", MySqlDbType = MySqlDbType.Int32, Value = serviceId, Direction = System.Data.ParameterDirection.Input };
             object p1 = new MySqlParameter { ParameterName = "pStatusId", MySqlDbType = MySqlDbType.Int32, Value = statusId, Direction = System.Data.ParameterDirection.Input };
             object[] parameters = { p0, p1 };
-            const string sql = "CALL `ServiceApp`.`GetByServiceId`(@pServiceId,@pStatusId);";
+            const string sql = "CALL `ServiceApp`.`GetCompanyByServiceId`(@pServiceId,@pStatusId);";
             var collection = _context.Companies.FromSqlRaw(sql, parameters).AsNoTracking().AsEnumerable().ToList();
             return collection;
         }

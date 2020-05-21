@@ -42,7 +42,6 @@ namespace Business.Concrete
 
         public Entities.Dto.Response.Category.Get Get(Entities.Dto.Request.Category.Get request)
         {
-            //var category = _categoryDal.Get(p => p.CategoryId == request.CategoryId && p.StatusId == Status.Active.ToInteger());
             var entity = _categoryDal.GetByCategoryId(request.CategoryId, request.StatusId);
             if (entity == null)
             {
@@ -61,11 +60,11 @@ namespace Business.Concrete
         // [SecuredOperation("Product.List,Admin,User")]
         //[ValidationAspect(typeof(CategoryValidator), Priority = 2)]
         //[CacheRemoveAspect(_pattern: "IProductService.Get")] Add islemine koy
-        //[CacheAspect(_duration: 10)]
+        [CacheAspect(_duration: 10)]
         public Entities.Dto.Response.Category.List GetList(Entities.Dto.Request.Category.List request)
         {
             if (request.StatusId < 0) { request.StatusId = 1; }
-            var categories = _categoryDal.GetList(p => p.StatusId == request.StatusId);
+            var categories = _categoryDal.GetAllCategory(request.StatusId);
             if (categories == null)
             {
                 return new Entities.Dto.Response.Category.List { ReturnCode = 400, ReturnMessage = Messages.CategoryExists };

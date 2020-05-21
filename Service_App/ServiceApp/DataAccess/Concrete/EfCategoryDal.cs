@@ -21,5 +21,14 @@ namespace DataAccess.Concrete
             var collection = _context.Categories.FromSqlRaw(sql, parameters).AsNoTracking().AsEnumerable().FirstOrDefault();
             return collection;
         }
+
+        public List<Entities.Map.Category> GetAllCategory(int statusId)
+        {
+            object p1 = new MySqlParameter { ParameterName = "pStatusId", MySqlDbType = MySqlDbType.Int32, Value = statusId, Direction = System.Data.ParameterDirection.Input };
+            object[] parameters = { p1 };
+            const string sql = "CALL `ServiceApp`.`GetAllCategory`(@pStatusId);";
+            var collection = _context.Categories.FromSqlRaw(sql, parameters).AsNoTracking().AsEnumerable().ToList();
+            return collection;
+        }
     }
 }

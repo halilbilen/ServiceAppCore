@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Entities.Concrete
 {
@@ -14,10 +13,7 @@ namespace Entities.Concrete
             : base(options)
         {
         }
-        public virtual DbSet<Map.Category> Categories { get; set; }
-        public virtual DbSet<Map.City> Cities { get; set; }
-        public virtual DbSet<Map.Country> Countries { get; set; }
-        public virtual DbSet<Map.Company> Companies { get; set; }
+
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<CategoryMedia> CategoryMedia { get; set; }
         public virtual DbSet<City> City { get; set; }
@@ -35,13 +31,13 @@ namespace Entities.Concrete
         public virtual DbSet<UserMedia> UserMedia { get; set; }
         public virtual DbSet<UserOperationClaim> UserOperationClaim { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=root;database=ServiceApp", x => x.ServerVersion("8.0.17-mysql"));
-            }
-        }
+        //protected override void onconfiguring(dbcontextoptionsbuilder optionsbuilder)
+        //{
+        //    if (!optionsbuilder.ısconfigured)
+        //    {
+        //        optionsbuilder.usemysql("server=localhost;port=3306;user=root;password=root;database=serviceapp", x => x.serverversion("8.0.17-mysql"));
+        //    }
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -460,10 +456,6 @@ namespace Entities.Concrete
             {
                 entity.Property(e => e.UserId).HasColumnType("int(11)");
 
-                entity.Property(e => e.AllowNotification).HasColumnType("int(11)");
-
-                entity.Property(e => e.AllowSms).HasColumnType("int(11)");
-
                 entity.Property(e => e.CityCode)
                     .HasColumnType("varchar(45)")
                     .HasCharSet("utf8mb4")
@@ -489,8 +481,6 @@ namespace Entities.Concrete
                     .HasColumnType("varchar(100)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
-
-                entity.Property(e => e.GenderId).HasColumnType("int(1)");
 
                 entity.Property(e => e.GsmNo)
                     .HasColumnType("varchar(45)")
