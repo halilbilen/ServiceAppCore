@@ -25,7 +25,7 @@ namespace Business.Concrete
         public Entities.Dto.Response.Country.List GetAll(Entities.Dto.Request.Country.List request)
         {
             if (request.StatusId <= 0) { request.StatusId = 1; }
-            var entity = _countryDal.GetAll(p => p.StatusId == request.StatusId);
+            var entity = _countryDal.GetAllCountry(request.StatusId);
             if (entity == null)
             {
                 return new Entities.Dto.Response.Country.List { ReturnCode = Value.CountryNotFound.ToInteger(), ReturnMessage = Messages.CountryNotFound };

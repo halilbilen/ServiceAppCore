@@ -82,7 +82,7 @@ namespace Entities.Dto.Response
     {
         public class List : Base
         {
-            public IEnumerable<Entities.Concrete.Country> Countries { get; set; }
+            public IEnumerable<Entities.Map.Country> Countries { get; set; }
         }
     }
 

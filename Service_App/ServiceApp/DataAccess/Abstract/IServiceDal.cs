@@ -9,5 +9,6 @@ namespace DataAccess.Abstract
 {
     public interface IServiceDal : IEntityRepository<Service>
     {
+        List<Entities.Map.Service> GetServiceByCategoryId(int categoryId, int statusId);
     }
 }

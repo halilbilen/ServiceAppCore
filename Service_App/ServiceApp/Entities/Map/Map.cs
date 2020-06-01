@@ -34,4 +34,12 @@ namespace Entities.Map
         public string Name { get; set; }
         public string About { get; set; }
     }
+
+    public class Service
+    {
+        [Key]
+        public int ServiceId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+    }
 }

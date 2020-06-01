@@ -8,5 +8,6 @@ namespace DataAccess.Abstract
 {
     public interface ICountryDal : IEntityRepository<Country>
     {
+        List<Entities.Map.Country> GetAllCountry(int statusId);
     }
 }
