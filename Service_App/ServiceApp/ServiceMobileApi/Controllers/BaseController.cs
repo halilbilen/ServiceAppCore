@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ServiceApi.Controllers
+namespace ServiceMobileApi.Controllers
 {
     [ApiController]
     public class BaseController : ControllerBase

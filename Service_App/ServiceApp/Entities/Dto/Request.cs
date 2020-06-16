@@ -84,6 +84,12 @@ namespace Entities.Dto.Request
 
     public class Service : Common
     {
+        public class Get : Common
+        {
+            public int CategoryId { get; set; }
+            public int StatusId { get; set; }
+        }
+
         public class List : Common
         {
             public int CategoryId { get; set; }
@@ -156,6 +162,32 @@ namespace Entities.Dto.Request
         {
             public int ServiceId { get; set; }
             public int StatusId { get; set; }
+        }
+    }
+
+    public class CompanyComment : Common
+    {
+        public class Get : Common
+        {
+            public int CompanyId { get; set; }
+            public int StatusId { get; set; }
+        }
+
+        public class Create : Common
+        {
+            public int UserId { get; set; }
+            public int CompanyId { get; set; }
+            public int Vote { get; set; }
+            public string Comment { get; set; }
+        }
+
+        public class Edit : Common
+        {
+            public int CompanyCommentId { get; set; }
+            public int UserId { get; set; }
+            public int CompanyId { get; set; }
+            public int Vote { get; set; }
+            public string Comment { get; set; }
         }
     }
 

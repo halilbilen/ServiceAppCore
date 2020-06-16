@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Entities.Concrete
 {
@@ -22,6 +23,7 @@ namespace Entities.Concrete
         public virtual DbSet<CompanyMedia> CompanyMedia { get; set; }
         public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<Expertise> Expertise { get; set; }
+        public virtual DbSet<Notification> Notification { get; set; }
         public virtual DbSet<OperationClaim> OperationClaim { get; set; }
         public virtual DbSet<Service> Service { get; set; }
         public virtual DbSet<ServiceMedia> ServiceMedia { get; set; }
@@ -31,13 +33,14 @@ namespace Entities.Concrete
         public virtual DbSet<UserMedia> UserMedia { get; set; }
         public virtual DbSet<UserOperationClaim> UserOperationClaim { get; set; }
 
-        //protected override void onconfiguring(dbcontextoptionsbuilder optionsbuilder)
-        //{
-        //    if (!optionsbuilder.ısconfigured)
-        //    {
-        //        optionsbuilder.usemysql("server=localhost;port=3306;user=root;password=root;database=serviceapp", x => x.serverversion("8.0.17-mysql"));
-        //    }
-        //}
+//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//        {
+//            if (!optionsBuilder.IsConfigured)
+//            {
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+//                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=root;database=ServiceApp", x => x.ServerVersion("8.0.17-mysql"));
+//            }
+//        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -322,6 +325,36 @@ namespace Entities.Concrete
                     .HasDefaultValueSql("'1'");
             });
 
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.Property(e => e.NotificationId).HasColumnType("int(11)");
+
+                entity.Property(e => e.Content)
+                    .HasColumnType("text")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.CreatedUserId).HasColumnType("int(11)");
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.ModifiedUserId).HasColumnType("int(11)");
+
+                entity.Property(e => e.StatusId)
+                    .HasColumnType("int(11)")
+                    .HasDefaultValueSql("'1'");
+
+                entity.Property(e => e.UserId).HasColumnType("int(11)");
+            });
+
             modelBuilder.Entity<OperationClaim>(entity =>
             {
                 entity.Property(e => e.OperationClaimId).HasColumnType("int(11)");
@@ -423,17 +456,11 @@ namespace Entities.Concrete
 
                 entity.Property(e => e.ServiceRegionsId).HasColumnType("int(11)");
 
-                entity.Property(e => e.CityCode)
-                    .HasColumnType("varchar(45)")
-                    .HasCharSet("utf8mb4")
-                    .HasCollation("utf8mb4_0900_ai_ci");
+                entity.Property(e => e.CityId).HasColumnType("int(11)");
 
                 entity.Property(e => e.CompanyId).HasColumnType("int(11)");
 
-                entity.Property(e => e.CountryCode)
-                    .HasColumnType("varchar(45)")
-                    .HasCharSet("utf8mb4")
-                    .HasCollation("utf8mb4_0900_ai_ci");
+                entity.Property(e => e.CountryId).HasColumnType("int(11)");
 
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("datetime")

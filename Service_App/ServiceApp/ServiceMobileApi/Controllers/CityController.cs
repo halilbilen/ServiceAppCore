@@ -7,7 +7,7 @@ using Entities.Dto.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ServiceApi.Controllers
+namespace ServiceMobileApi.Controllers
 {
     [Produces("application/json")]
     [Route("[controller]/[action]")]

@@ -70,6 +70,24 @@ namespace Entities.Dto.Response
         }
     }
 
+    public class CompanyComment
+    {
+        public class Create : Base
+        {
+
+        }
+
+        public class Get : Base
+        {
+            public IEnumerable<Entities.Map.CompanyComment> CompanyComments { get; set; }
+        }
+
+        public class Edit : Base
+        {
+
+        }
+    }
+
     public class City
     {
         public class List : Base
@@ -116,6 +134,11 @@ namespace Entities.Dto.Response
 
     public class Service : Base
     {
+        public class Get : Base
+        {
+            public IEnumerable<Entities.Map.Service> Services { get; set; }
+        }
+
         public class List : Paging
         {
             public IEnumerable<Entities.Concrete.Service> Services { get; set; }

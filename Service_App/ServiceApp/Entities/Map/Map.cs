@@ -42,4 +42,16 @@ namespace Entities.Map
         public string Name { get; set; }
         public string Description { get; set; }
     }
+
+    public class CompanyComment
+    {
+        [Key]
+        public int CompanyCommentId { get; set; }
+        public string AdSoyad { get; set; }
+        public string CompanyName { get; set; }
+        public string GsmNo { get; set; }
+        public string Email { get; set; }
+        public string Comment { get; set; }
+        public int Vote { get; set; }
+    }
 }

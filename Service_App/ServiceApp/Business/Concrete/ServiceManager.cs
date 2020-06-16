@@ -55,14 +55,31 @@ namespace Business.Concrete
             return list;
         }
 
+        public Entities.Dto.Response.Service.Get GetServiceByCategoryId(Entities.Dto.Request.Service.Get request)
+        {
+            if (request.StatusId < 0) { request.StatusId = 1; }
+            var services = _serviceDal.GetServiceByCategoryId(request.CategoryId, request.StatusId);
+            if (services == null || services.Count <= 0)
+            {
+                return new Entities.Dto.Response.Service.Get { ReturnCode = Value.ServiceNotFound.ToInteger(), ReturnMessage = Messages.ServiceNotFound };
+            }
+            var entity = new Entities.Dto.Response.Service.Get()
+            {
+                Services = services,
+                ReturnCode = Value.Success.ToInteger(),
+                ReturnMessage = Messages.Success
+            };
+            return entity;
+        }
+
         public Entities.Dto.Response.Service.Search Search(Entities.Dto.Request.Service.Search request)
         {
             if (string.IsNullOrEmpty(request.Word))
             {
                 return new Entities.Dto.Response.Service.Search { ReturnCode = Value.ServiceNotFound.ToInteger(), ReturnMessage = Messages.ServiceNotFound };
             }
-            var service = _serviceDal.GetAll(p => p.StatusId == Status.Active.ToInteger() && EF.Functions.Like(p.Name, "%" + request.Word + "%"));
-            if (service == null)
+            var service = _serviceDal.GetList(p => p.StatusId == Status.Active.ToInteger() && EF.Functions.Like(p.Name, "%" + request.Word + "%"));
+            if (service.Count <= 0 || service == null)
             {
                 return new Entities.Dto.Response.Service.Search { ReturnCode = Value.ServiceNotFound.ToInteger(), ReturnMessage = Messages.ServiceNotFound };
             }

@@ -11,5 +11,6 @@ namespace Business.Abstract
         Task<Entities.Dto.Response.Service.List> GetByCategoryId(Entities.Dto.Request.Service.List request);
         Entities.Dto.Response.Service.Edit Edit(Entities.Dto.Request.Service.Edit request);
         Entities.Dto.Response.Service.Search Search(Entities.Dto.Request.Service.Search request);
+        Entities.Dto.Response.Service.Get GetServiceByCategoryId(Entities.Dto.Request.Service.Get request);
     }
 }

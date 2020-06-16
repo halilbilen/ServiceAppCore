@@ -46,6 +46,14 @@ namespace Core.Utilities.Messages
         public static string CompanyPhoneNotNull = "Sirket telefonu bos olamaz.";
         public static string CompanyNotUser = "Kullanici degil";
         public static string CompanyAdded = "Sirket eklendi";
+
+        public static string CompanyCommentNotFound = "Ilk yorumu sen yap !";
+
+        public static string CommentNotNull = "Yorum boş olamaz";
+
+        public static string VoteNotNull = "Oy vermediniz.";
+
+        public static string CommentAdded = "Yorum yapıldı";
     }
 }
 

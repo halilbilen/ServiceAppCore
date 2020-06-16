@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
-using Entities.Dto;
-using Entities.Dto.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ServiceApi.Controllers
+namespace ServiceMobileApi.Controllers
 {
-    [Produces("application/json")]
     [Route("[controller]/[action]")]
     [ApiController]
     public class CompanyController : BaseController
@@ -31,7 +28,7 @@ namespace ServiceApi.Controllers
             request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
             request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
             var result = _companyService.Add(request);
-            return Ok(new Response<Company.Create> { ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
+            return Ok(new Entities.Dto.Response.Response<Entities.Dto.Response.Company.Create> { ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
         }
 
         [HttpPost]
@@ -42,7 +39,7 @@ namespace ServiceApi.Controllers
             request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
             request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
             var result = _companyService.GetByCompanyId(request);
-            return Ok(new Response<Company.Get> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
+            return Ok(new Entities.Dto.Response.Response<Entities.Dto.Response.Company.Get> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
         }
 
         [HttpPost]
@@ -53,8 +50,7 @@ namespace ServiceApi.Controllers
             request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
             request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
             var result = _companyService.GetByServiceId(request);
-            return Ok(new Response<Company.List> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
+            return Ok(new Entities.Dto.Response.Response<Entities.Dto.Response.Company.List> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
         }
-
     }
 }

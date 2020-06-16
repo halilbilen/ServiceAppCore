@@ -28,7 +28,11 @@ namespace Core.Utilities.AllCode
         CompanyPhoneNotNull = 1033,
         CategoryAdded = 1034,
         CompanyNotUser = 1035,
-        CompanyAdded = 1036
+        CompanyAdded = 1036,
+        CompanyCommentNotFound = 1037,
+        CommentNotNull = 1038,
+        VoteNotNull = 1039,
+        CommentAdded = 1040
     }
 
     public enum Status

@@ -12,25 +12,25 @@ namespace ServiceMobileApi.Controllers
     [Produces("application/json")]
     [Route("[controller]/[action]")]
     [ApiController]
-    public class CountryController : BaseController
+    public class CompanyCommentController : BaseController
     {
-        private ICountryService _countryService;
-
-        public CountryController(ICountryService countryService, IHttpContextAccessor accessor) : base(accessor)
+        private ICompanyCommentService _companyCommentService;
+        public CompanyCommentController(ICompanyCommentService companyCommentService, IHttpContextAccessor accessor) : base(accessor)
         {
-            _countryService = countryService;
             _accessor = accessor;
+            _companyCommentService = companyCommentService;
         }
 
         [HttpPost]
-        public IActionResult List([FromBody]Entities.Dto.Request.Country.List request)
+        public IActionResult Get([FromBody]Entities.Dto.Request.CompanyComment.Get request)
         {
             if (request == null) { return BadRequest(); }
             request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
             request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
             request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
-            var result = _countryService.GetAll(request);
-            return Ok(new Response<Country.List> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
+            var result = _companyCommentService.GetCompanyComment(request);
+            return Ok(new Response<CompanyComment.Get> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
         }
+
     }
 }

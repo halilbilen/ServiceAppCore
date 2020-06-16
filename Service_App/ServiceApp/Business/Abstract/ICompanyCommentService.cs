@@ -8,10 +8,8 @@ namespace Business.Abstract
 {
     public interface ICompanyCommentService
     {
-        IDataResult<CompanyComment> GetById(int CategoryId);
-        IDataResult<List<CompanyComment>> GetList();
-        IResult Add(CompanyComment Category);
-        IResult Delete(CompanyComment Category);
-        IResult Update(CompanyComment Category);
+        Entities.Dto.Response.CompanyComment.Edit UpdateComment(Entities.Dto.Request.CompanyComment.Edit request);
+        Entities.Dto.Response.CompanyComment.Get GetCompanyComment(Entities.Dto.Request.CompanyComment.Get request);
+        Entities.Dto.Response.CompanyComment.Create Add(Entities.Dto.Request.CompanyComment.Create request);
     }
 }

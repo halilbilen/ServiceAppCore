@@ -18,14 +18,17 @@ namespace Business.Concrete
         private ICompanyDal _companyDal;
         private IServiceDal _serviceDal;
         private IUserDal _userDal;
+        private ICompanyCommentDal _companyCommentDal;
 
-        public CompanyManager(ICompanyDal companyDal, IServiceDal serviceDal, IUserDal userDal)
+        public CompanyManager(ICompanyDal companyDal, IServiceDal serviceDal, IUserDal userDal, ICompanyCommentDal companyCommentDal)
         {
             _companyDal = companyDal;
             _serviceDal = serviceDal;
             _userDal = userDal;
+            _companyCommentDal = companyCommentDal;
         }
 
+        //[CacheRemoveAspect(_pattern: "ICompanyService.Add")]
         public Entities.Dto.Response.Company.Create Add(Entities.Dto.Request.Company.Create request)
         {
             if (request.UserId <= 0) { return new Entities.Dto.Response.Company.Create { ReturnCode = Value.CompanyNotUser.ToInteger(), ReturnMessage = Messages.CompanyNotUser }; }
@@ -69,6 +72,7 @@ namespace Business.Concrete
             return new Entities.Dto.Response.Company.Edit { CompanyId = company.CompanyId, ReturnCode = Value.Success.ToInteger(), ReturnMessage = Messages.Success };
         }
 
+        // [CacheRemoveAspect(_pattern: "ICompanyService.Get")]
         public Entities.Dto.Response.Company.Get GetByCompanyId(Entities.Dto.Request.Company.Get request)
         {
             var company = _companyDal.Get(filter: p => p.CompanyId == request.CompanyId && p.StatusId == Status.Active.ToInteger());
@@ -87,14 +91,14 @@ namespace Business.Concrete
             return data;
         }
 
-        [CacheAspect]
+        // [CacheAspect]
         public Entities.Dto.Response.Company.List GetByServiceId(Entities.Dto.Request.Company.List request)
         {
             var service = _serviceDal.Get(p => p.ServiceId == request.ServiceId && p.StatusId == Status.Active.ToInteger());
             if (service == null) { return new Entities.Dto.Response.Company.List { ReturnCode = Value.ServiceNotFound.ToInteger(), ReturnMessage = Messages.ServiceNotFound }; }
 
             var entity = _companyDal.GetByServiceId(request.ServiceId, request.StatusId);
-            if (entity == null)
+            if (entity == null || entity.Count <= 0)
             {
                 return new Entities.Dto.Response.Company.List { ReturnCode = Value.CompanyNotFound.ToInteger(), ReturnMessage = Messages.CompanyNotFound };
             }
