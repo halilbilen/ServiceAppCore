@@ -173,6 +173,12 @@ namespace Entities.Dto.Request
             public int StatusId { get; set; }
         }
 
+        public class GetUserId : Common
+        {
+            public int UserId { get; set; }
+            public int StatusId { get; set; }
+        }
+
         public class Create : Common
         {
             public int UserId { get; set; }

@@ -43,7 +43,23 @@ namespace Business.Concrete
             return new Entities.Dto.Response.CompanyComment.Create { ReturnCode = Value.CommentAdded.ToInteger(), ReturnMessage = Messages.CommentAdded };
         }
 
-        [CacheAspect]
+        public Entities.Dto.Response.CompanyComment.GetUserId GetCommentByUserId(Entities.Dto.Request.CompanyComment.GetUserId request)
+        {
+            var entity = _companyCommentDal.GetCompanyCommentByUserId(request.UserId, request.StatusId);
+            if (entity == null)
+            {
+                return new Entities.Dto.Response.CompanyComment.GetUserId { ReturnCode = Value.CompanyCommentNotFound.ToInteger(), ReturnMessage = Messages.CompanyCommentNotFound };
+            }
+            var result = new Entities.Dto.Response.CompanyComment.GetUserId()
+            {
+                CompanyComments = entity,
+                ReturnCode = Value.Success.ToInteger(),
+                ReturnMessage = Messages.Success
+            };
+            return result;
+        }
+
+        //[CacheAspect]
         public Entities.Dto.Response.CompanyComment.Get GetCompanyComment(Entities.Dto.Request.CompanyComment.Get request)
         {
             var entity = _companyCommentDal.GetCompanyComment(request.CompanyId, request.StatusId);

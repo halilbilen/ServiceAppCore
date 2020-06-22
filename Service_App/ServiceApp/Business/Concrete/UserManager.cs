@@ -77,7 +77,7 @@ namespace Business.Concrete
                 return new Entities.Dto.Response.User.Login { ReturnCode = Value.InvalidPassword.ToInteger(), ReturnMessage = Messages.PasswordError };
             }
             var token = CreateAccessToken(userExists);
-            return new Entities.Dto.Response.User.Login { Token = token.Token, ReturnCode = Value.Success.ToInteger(), ReturnMessage = Messages.SuccessLogin };
+            return new Entities.Dto.Response.User.Login { Token = token.Token, Name = userExists.Name, Surname = userExists.Surname, Email = userExists.Email, GsmNo = userExists.GsmNo ,ReturnCode = Value.Success.ToInteger(), ReturnMessage = Messages.SuccessLogin };
         }
 
         [ValidationAspect(typeof(UserValidator), Priority = 2)]

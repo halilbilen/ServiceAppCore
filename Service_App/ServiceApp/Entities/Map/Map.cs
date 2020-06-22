@@ -33,6 +33,7 @@ namespace Entities.Map
         public int CompanyId { get; set; }
         public string Name { get; set; }
         public string About { get; set; }
+        public string MediaPath { get; set; }
     }
 
     public class Service
@@ -41,6 +42,7 @@ namespace Entities.Map
         public int ServiceId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string MediaPath { get; set; }
     }
 
     public class CompanyComment
@@ -53,5 +55,16 @@ namespace Entities.Map
         public string Email { get; set; }
         public string Comment { get; set; }
         public int Vote { get; set; }
+    }
+
+    public class CompanyCommentByUserId
+    {
+        [Key]
+        public int CompanyCommentId { get; set; }
+        public int CompanyId { get; set; }
+        public string Name { get; set; }
+        public string MediaPath { get; set; }
+        public int Vote { get; set; }
+        public string Comment { get; set; }
     }
 }

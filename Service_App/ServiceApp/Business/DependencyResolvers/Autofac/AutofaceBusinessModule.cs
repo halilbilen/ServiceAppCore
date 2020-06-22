@@ -25,10 +25,6 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EfCompanyDal>().As<ICompanyDal>();
             builder.RegisterType<CompanyCommentManager>().As<ICompanyCommentService>();
             builder.RegisterType<EfCompanyCommentDal>().As<ICompanyCommentDal>();
-            builder.RegisterType<CompanyMediaManager>().As<ICompanyMediaService>();
-            builder.RegisterType<EfCompanyMediaDal>().As<ICompanyMediaDal>();
-            builder.RegisterType<ServiceMediaManager>().As<IServiceMediaService>();
-            builder.RegisterType<EfServiceMediaDal>().As<IServiceMediaDal>();
             builder.RegisterType<ServiceManager>().As<IServiceService>();
             builder.RegisterType<EfServiceDal>().As<IServiceDal>();
             builder.RegisterType<CityManager>().As<ICityService>();

@@ -27,7 +27,7 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        [CacheAspect]
+        [CacheAspect(_duration: 30)]
         public async Task<Entities.Dto.Response.Service.List> GetByCategoryId(Entities.Dto.Request.Service.List request)
         {
             int pageSize = 10;
@@ -55,6 +55,7 @@ namespace Business.Concrete
             return list;
         }
 
+        //[CacheAspect(_duration: 30)]
         public Entities.Dto.Response.Service.Get GetServiceByCategoryId(Entities.Dto.Request.Service.Get request)
         {
             if (request.StatusId < 0) { request.StatusId = 1; }
@@ -63,6 +64,7 @@ namespace Business.Concrete
             {
                 return new Entities.Dto.Response.Service.Get { ReturnCode = Value.ServiceNotFound.ToInteger(), ReturnMessage = Messages.ServiceNotFound };
             }
+
             var entity = new Entities.Dto.Response.Service.Get()
             {
                 Services = services,
@@ -72,6 +74,7 @@ namespace Business.Concrete
             return entity;
         }
 
+        [CacheAspect(_duration: 30)]
         public Entities.Dto.Response.Service.Search Search(Entities.Dto.Request.Service.Search request)
         {
             if (string.IsNullOrEmpty(request.Word))

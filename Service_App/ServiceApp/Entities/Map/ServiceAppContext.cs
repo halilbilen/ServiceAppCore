@@ -16,6 +16,7 @@ namespace Entities.Concrete
         public virtual DbSet<Map.Company> Companies { get; set; }
         public virtual DbSet<Map.Service> Services { get; set; }
         public virtual DbSet<Map.CompanyComment> CompanyComments { get; set; }
+        public virtual DbSet<Map.CompanyCommentByUserId> CompanyCommentByUserId { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

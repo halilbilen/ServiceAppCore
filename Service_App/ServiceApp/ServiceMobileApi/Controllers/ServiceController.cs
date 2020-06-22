@@ -46,7 +46,7 @@ namespace ServiceMobileApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult Get([FromBody]Entities.Dto.Request.Service.Get request)
+        public ActionResult List([FromBody]Entities.Dto.Request.Service.Get request)
         {
             if (request == null) { return BadRequest(); }
             request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();

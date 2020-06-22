@@ -82,6 +82,11 @@ namespace Entities.Dto.Response
             public IEnumerable<Entities.Map.CompanyComment> CompanyComments { get; set; }
         }
 
+        public class GetUserId : Base
+        {
+            public IEnumerable<Entities.Map.CompanyCommentByUserId> CompanyComments { get; set; }
+        }
+
         public class Edit : Base
         {
 
@@ -113,6 +118,10 @@ namespace Entities.Dto.Response
 
         public class Login : Base
         {
+            public string Name { get; set; }
+            public string Surname { get; set; }
+            public string Email { get; set; }
+            public string GsmNo { get; set; }
             public string Token { get; set; }
         }
 

@@ -32,5 +32,16 @@ namespace ServiceMobileApi.Controllers
             return Ok(new Response<CompanyComment.Get> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
         }
 
+        [HttpPost]
+        public IActionResult GetByUserId([FromBody]Entities.Dto.Request.CompanyComment.GetUserId request)
+        {
+            if (request == null) { return BadRequest(); }
+            request.ClientIp = _accessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            request.ClientUserAgent = _accessor.HttpContext.Request.Headers["User-Agent"].ToString();
+            request.AcceptLanguage = _accessor.HttpContext.Request.Headers["Accept-Language"].ToString();
+            var result = _companyCommentService.GetCommentByUserId(request);
+            return Ok(new Response<CompanyComment.GetUserId> { Data = result, ReturnCode = result.ReturnCode, ReturnMessage = result.ReturnMessage });
+        }
+
     }
 }

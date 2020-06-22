@@ -9,5 +9,6 @@ namespace DataAccess.Abstract
     public interface ICompanyCommentDal : IEntityRepository<CompanyComment>
     {
         List<Entities.Map.CompanyComment> GetCompanyComment(int companyId, int statusId);
+        List<Entities.Map.CompanyCommentByUserId> GetCompanyCommentByUserId(int userId, int statusId);
     }
 }
