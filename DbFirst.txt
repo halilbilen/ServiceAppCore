@@ -1,3 +1,8 @@
+MySQL
 Scaffold-DbContext "server=localhost;port=3306;user=root;password=root;database=ServiceApp;" "Pomelo.EntityFrameworkCore.MySql" -OutputDir Concrete -f
 
-Scaffold-DbContext "Server=.;Database=Northwind;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+MSSQL ilk kayıt
+Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=Test;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Model -f
+MSSQL table update
+Scaffold-DbContext "Server=(localdb)\MSSQLLocalDB;Database=Test;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Model 
